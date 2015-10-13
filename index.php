@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Museum</title>
+	<title>DHBW Museum</title>
 	<link rel="icon" type="image/png" href="images/favicon.ico">
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<link rel="stylesheet" href="css/font-awesome.css">
