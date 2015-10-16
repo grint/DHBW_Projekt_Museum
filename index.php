@@ -1,96 +1,91 @@
 <?php
-	ini_set('display_errors',1); 
-	error_reporting(E_ALL);
 
-	session_start();
-	$db = mysqli_connect("localhost", "admin",  "admin", "museum") or die (mysql_error());
-	$db->set_charset("utf8");
+require( "config.php" );
+session_start();
+// require( TEMPLATE_PATH . "/lang/language.php" );
+
+if(isSet($_GET['lang'])) {
+  $GLOBALS['lang'] = $_GET['lang'];
+  // register the session and set the cookie
+  $_SESSION['lang'] = $GLOBALS['lang'];
+  setcookie('lang', $GLOBALS['lang'], time() + (3600 * 24 * 30));
+}
+else if(isSet($_SESSION['lang'])) {
+  $GLOBALS['lang'] = $_SESSION['lang'];
+}
+else if(isSet($_COOKIE['lang'])) {
+  $GLOBALS['lang'] = $_COOKIE['lang'];
+}
+else {
+  $GLOBALS['lang'] = 'de';
+}
+ 
+require( TEMPLATE_PATH . '/lang/lang.'.$GLOBALS['lang'].'.php' );
+
+
+$action = isset( $_GET['action'] ) ? $_GET['action'] : "";
+
+switch ( $action ) {
+  case 'allPersons':
+    allPersons();
+    break;
+  case 'viewPerson':
+    viewPerson();
+    break;
+  case 'viewModal':
+    viewModal();
+    break;
+  default:
+    homepage();
+}
+
+function allPersons() {
+  $results = array();
+  if (isset($_GET["page"])) { 
+    $page  = $_GET["page"]; 
+    $start_from = ($page - 1) * PERSONS_PER_PAGE; 
+    $data = Person::getList($start_from, PERSONS_PER_PAGE);
+  } 
+  else { 
+    $data = Person::getList(0, PERSONS_PER_PAGE);
+  };
+
+  $results['persons'] = $data['results'];
+  $results['totalRows'] = $data['totalRows'];
+  $results['totalPages'] = ceil($results['totalRows'] / PERSONS_PER_PAGE);
+  $results['pageTitle'] = "Alle Informatiker";
+  require( TEMPLATE_PATH . "/allPersons.php" );
+}
+
+function viewModal() {
+  if ( !isset($_GET["personId"]) || !$_GET["personId"] ) {
+    homepage();
+    return;
+  }
+  $results = array();
+  $results['person'] = Person::getById( (int)$_GET["personId"] );
+  $results['pageTitle'] = $results['person']->nachname;
+  require( TEMPLATE_PATH . "/viewModal.php" );
+}
+
+function viewPerson() {
+  if ( !isset($_GET["personId"]) || !$_GET["personId"] ) {
+    homepage();
+    return;
+  }
+  $results = array();
+  $results['person'] = Person::getById( (int)$_GET["personId"] );
+  $results['pageTitle'] = $results['person']->nachname;
+  require( TEMPLATE_PATH . "/viewPerson.php" );
+}
+
+function homepage() {
+  $results = array();
+  $data = Person::getList(0, HOMEPAGE_NUM_PERSONS );
+  $results['persons'] = $data['results'];
+  $results['totalRows'] = $data['totalRows'];
+  $results['pageTitle'] = "Informatiker";
+  require( TEMPLATE_PATH . "/homepage.php" );
+}
+
 ?>
-
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Museum</title>
-	<link rel="icon" type="image/png" href="images/favicon.ico">
-	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	<link rel="stylesheet" href="css/font-awesome.css">
-	<link rel="stylesheet" href="css/fonts.css">
-	<link rel="stylesheet" href="css/style.css">
-	<script src="js/jquery-2.1.4.min.js"></script>
-	<script src="js/script.js"></script>
-</head>
-
-<body>
-	<div class="page-wrap">
-		<?php include('include/header.php'); ?>
-
-		<div class="content">
-			<?php $persons = mysqli_query($db, "SELECT * FROM person") or die(mysql_error()); ?>
-			<?php $count = mysqli_num_rows($persons); ?>
-
-			<?php if($count > 0): ?>
-				<div class="persons">
-					<?php while($person = mysqli_fetch_array($persons)): ?>
-						<div class="person">
-
-							<div class="person-data name">
-								<span class="data">
-									<h2>
-										<i class="fa fa-user"></i> 
-										<?php if($person['titel'] != null): ?> 
-											<?php echo $person['titel']; ?> 
-										<?php endif; ?>
-										<?php echo $person['vorname']; ?> 
-										<?php echo $person['nachname']; ?>
-									</h2>
-								</span>
-							</div>
-
-							<div class="person-data birth">
-								<span class="title">
-									 Geboren:
-								</span>
-								<span class="data">
-									<?php 
-										$date = date_create($person['geburtsdatum']);
-										echo date_format($date, "d.m.Y"); 
-									?> - 
-									<?php echo $person['geburtsort']; ?> 
-								</span>
-							</div>
-
-							<div class="person-data death">
-								<span class="title">
-									Gestorben:
-								</span>
-								<span class="data">
-									<?php 
-										$date = date_create($person['todesdatum']);
-										echo date_format($date, "d.m.Y"); 
-									?> - 
-									<?php echo $person['todesort']; ?> 
-								</span>
-							</div>
-
-							<div class="person-data short-description">
-								<span class="data">
-									<?php echo $person['k_beschreibung']; ?> 
-								</span>
-							</div>
-
-							<div class="person-data long-description">
-								<span class="data">
-									<?php echo $person['l_beschreibung']; ?> 
-								</span>
-							</div>
-						</div>
-					<?php endwhile; ?>
-				</div>
-			<?php endif; ?>
-		</div>
-
-	</div>
-
-	<footer>© 2015 Museum</footer>
-</body>
-</html>
