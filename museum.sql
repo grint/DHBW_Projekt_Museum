@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 21, 2015 at 07:58 PM
+-- Generation Time: Oct 21, 2015 at 09:50 PM
 -- Server version: 5.6.26
 -- PHP Version: 5.6.12
 
@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS `bilder` (
   `bild_id` int(10) unsigned NOT NULL,
   `bild_link` varchar(100) NOT NULL,
   `beschreibung` text,
-  `person_id` int(10) unsigned NOT NULL
+  `informatiker` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -187,7 +187,7 @@ INSERT INTO `person` (`id`, `vorname`, `nachname`, `geburtsdatum`, `geburtsort`,
 
 CREATE TABLE IF NOT EXISTS `person_bilder` (
   `id` int(10) unsigned NOT NULL,
-  `person_id` int(10) unsigned NOT NULL,
+  `person_id` int(11) unsigned NOT NULL,
   `bilder_id` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='\n';
 
@@ -201,7 +201,23 @@ CREATE TABLE IF NOT EXISTS `person_kategorie` (
   `id` int(10) unsigned NOT NULL,
   `person_id` int(10) unsigned NOT NULL,
   `kategorie_id` int(10) unsigned NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='\n';
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='\n';
+
+--
+-- Dumping data for table `person_kategorie`
+--
+
+INSERT INTO `person_kategorie` (`id`, `person_id`, `kategorie_id`) VALUES
+(1, 1, 1),
+(2, 2, 2),
+(3, 2, 3),
+(4, 2, 4),
+(5, 2, 5),
+(6, 3, 5),
+(7, 4, 1),
+(8, 4, 2),
+(9, 5, 1),
+(10, 6, 1);
 
 -- --------------------------------------------------------
 
@@ -213,7 +229,21 @@ CREATE TABLE IF NOT EXISTS `person_quelle` (
   `id` int(11) NOT NULL,
   `person_id` int(10) unsigned NOT NULL,
   `quelle_id` int(10) unsigned NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `person_quelle`
+--
+
+INSERT INTO `person_quelle` (`id`, `person_id`, `quelle_id`) VALUES
+(1, 1, 1),
+(2, 1, 2),
+(3, 1, 3),
+(4, 2, 4),
+(5, 3, 5),
+(6, 4, 6),
+(7, 5, 7),
+(8, 6, 8);
 
 -- --------------------------------------------------------
 
@@ -254,7 +284,28 @@ CREATE TABLE IF NOT EXISTS `quelle_autor` (
   `quelle_autor_id` int(10) unsigned NOT NULL,
   `quelle` int(10) unsigned NOT NULL,
   `autor` int(10) unsigned NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='\n';
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COMMENT='\n';
+
+--
+-- Dumping data for table `quelle_autor`
+--
+
+INSERT INTO `quelle_autor` (`quelle_autor_id`, `quelle`, `autor`) VALUES
+(1, 1, 15),
+(2, 2, 1),
+(3, 3, 2),
+(4, 4, 3),
+(5, 4, 4),
+(6, 4, 5),
+(7, 4, 6),
+(8, 4, 7),
+(9, 4, 8),
+(10, 4, 9),
+(11, 5, 10),
+(12, 6, 11),
+(13, 7, 12),
+(14, 7, 13),
+(15, 8, 14);
 
 -- --------------------------------------------------------
 
@@ -265,8 +316,22 @@ CREATE TABLE IF NOT EXISTS `quelle_autor` (
 CREATE TABLE IF NOT EXISTS `quelle_verlag` (
   `quelle_verlag_id` int(10) unsigned NOT NULL,
   `quelle` int(10) unsigned NOT NULL,
-  `verlag` int(10) unsigned NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `verlag` int(10) unsigned DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `quelle_verlag`
+--
+
+INSERT INTO `quelle_verlag` (`quelle_verlag_id`, `quelle`, `verlag`) VALUES
+(1, 1, 1),
+(2, 2, 2),
+(3, 3, 3),
+(4, 4, 4),
+(5, 5, 5),
+(6, 6, NULL),
+(7, 7, 7),
+(8, 8, 6);
 
 -- --------------------------------------------------------
 
@@ -353,7 +418,13 @@ ALTER TABLE `benutzer`
 --
 ALTER TABLE `bilder`
   ADD PRIMARY KEY (`bild_id`),
-  ADD KEY `fk_bilder_informatiker_idx` (`person_id`);
+  ADD UNIQUE KEY `person_id` (`informatiker`),
+  ADD UNIQUE KEY `person_id_2` (`informatiker`),
+  ADD KEY `fk_bilder_informatiker_idx` (`informatiker`),
+  ADD KEY `person_id_3` (`informatiker`),
+  ADD KEY `person_id_4` (`informatiker`),
+  ADD KEY `informatiker` (`informatiker`),
+  ADD KEY `informatiker_2` (`informatiker`);
 
 --
 -- Indexes for table `informatiker`
@@ -396,7 +467,6 @@ ALTER TABLE `person`
 --
 ALTER TABLE `person_bilder`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_person_bilder_person1_idx` (`person_id`),
   ADD KEY `fk_person_bilder_bilder1_idx` (`bilder_id`);
 
 --
@@ -509,12 +579,12 @@ ALTER TABLE `person_bilder`
 -- AUTO_INCREMENT for table `person_kategorie`
 --
 ALTER TABLE `person_kategorie`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `person_quelle`
 --
 ALTER TABLE `person_quelle`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `quelle`
 --
@@ -524,12 +594,12 @@ ALTER TABLE `quelle`
 -- AUTO_INCREMENT for table `quelle_autor`
 --
 ALTER TABLE `quelle_autor`
-  MODIFY `quelle_autor_id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `quelle_autor_id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `quelle_verlag`
 --
 ALTER TABLE `quelle_verlag`
-  MODIFY `quelle_verlag_id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `quelle_verlag_id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `rolle`
 --
@@ -559,7 +629,7 @@ ALTER TABLE `benutzer`
 -- Constraints for table `bilder`
 --
 ALTER TABLE `bilder`
-  ADD CONSTRAINT `fk_bilder_informatiker` FOREIGN KEY (`person_id`) REFERENCES `informatiker` (`informatiker_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_bilder_informatiker` FOREIGN KEY (`informatiker`) REFERENCES `informatiker` (`informatiker_id`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `informatiker_kategorie`
