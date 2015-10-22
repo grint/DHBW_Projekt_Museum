@@ -121,7 +121,12 @@ class Person
   */
 
   public static function getList( $startFrom=0, $numRows=1000000, $order="nachname ASC" ) {
-    $conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
+    $opt = array(
+        PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+    );
+
+    $conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD, $opt );
     $sql = "SELECT SQL_CALC_FOUND_ROWS PERSON.*, 
               BILDER.pfad AS bild_pfad, 
               BILDER.beschreibung AS bild_beschreibung,
