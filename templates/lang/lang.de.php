@@ -20,7 +20,7 @@ const RETURN_TO_HOME = "Zurück zur Startseite";
 
 // Menu
 
-const MENU_ABOUT = "Über Museum";
+const MENU_ABOUT = "Über das Museum";
 const MENU_ALL_PERSONS = ALL_COMPUTER_SCIENTIST;
 
 //  Home page

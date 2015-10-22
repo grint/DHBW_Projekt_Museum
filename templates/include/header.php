@@ -55,7 +55,7 @@
                         <a href="./?action=allPersons">Alle Informatiker</a>
                     </li>
                     <li class="page-scroll">
-                        <a href="#about">Über Museum</a>
+                        <a href="#about">Über das Museum</a>
                     </li>
                 </ul>
             </div>
