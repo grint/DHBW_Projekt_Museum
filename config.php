@@ -6,7 +6,7 @@ define( "DB_PASSWORD", "admin" );
 define( "CLASS_PATH", "classes" );
 define( "TEMPLATE_PATH", "templates" );
 define( "HOMEPAGE_NUM_PERSONS", 6 );
-define( "PERSONS_PER_PAGE", 1 );
+define( "PERSONS_PER_PAGE", 3 );
 define( "ADMIN_USERNAME", "einhorn" );
 define( "ADMIN_PASSWORD", "1a2s3d4f" );
 require( CLASS_PATH . "/Person.php" );

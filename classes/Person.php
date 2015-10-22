@@ -153,7 +153,7 @@ class Person
     $sql = "SELECT FOUND_ROWS() AS totalRows";
     $totalRows = $conn->query( $sql )->fetch();
     $conn = null;
-    return ( array ( "results" => $list, "totalRows" => $totalRows[0] ) );
+    return ( array ( "results" => $list, "totalRows" => $totalRows['totalRows'][0] ) );
   }
 
 
@@ -168,10 +168,10 @@ class Person
 
     // Insert person
     $conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
-    $sql = "INSERT INTO person ( geburtsdatum, name, k_beschreibung, l_beschreibung ) VALUES ( :geburtsdatum, :name, :k_beschreibung, :l_beschreibung )";
+    $sql = "INSERT INTO person ( geburtsdatum, nachname, k_beschreibung, l_beschreibung ) VALUES ( :geburtsdatum, :nachname, :k_beschreibung, :l_beschreibung )";
     $st = $conn->prepare ( $sql );
     $st->bindValue( ":geburtsdatum", $this->geburtsdatum, PDO::PARAM_INT );
-    $st->bindValue( ":name", $this->name, PDO::PARAM_STR );
+    $st->bindValue( ":nachname", $this->nachname, PDO::PARAM_STR );
     $st->bindValue( ":k_beschreibung", $this->k_beschreibung, PDO::PARAM_STR );
     $st->bindValue( ":l_beschreibung", $this->l_beschreibung, PDO::PARAM_STR );
     $st->execute();
@@ -191,10 +191,10 @@ class Person
    
     // Update person
     $conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
-    $sql = "UPDATE person SET geburtsdatum=:geburtsdatum, name=:name, k_beschreibung=:k_beschreibung, l_beschreibung=:l_beschreibung WHERE id = :id";
+    $sql = "UPDATE person SET geburtsdatum=:geburtsdatum, nachname=:nachname, k_beschreibung=:k_beschreibung, l_beschreibung=:l_beschreibung WHERE id = :id";
     $st = $conn->prepare ( $sql );
     $st->bindValue( ":geburtsdatum", $this->geburtsdatum, PDO::PARAM_INT );
-    $st->bindValue( ":name", $this->name, PDO::PARAM_STR );
+    $st->bindValue( ":nachname", $this->nachname, PDO::PARAM_STR );
     $st->bindValue( ":k_beschreibung", $this->k_beschreibung, PDO::PARAM_STR );
     $st->bindValue( ":l_beschreibung", $this->l_beschreibung, PDO::PARAM_STR );
     $st->bindValue( ":id", $this->id, PDO::PARAM_INT );

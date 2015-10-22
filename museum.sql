@@ -1,664 +1,503 @@
--- phpMyAdmin SQL Dump
--- version 4.4.14
--- http://www.phpmyadmin.net
---
--- Host: 127.0.0.1
--- Generation Time: Oct 21, 2015 at 09:50 PM
--- Server version: 5.6.26
--- PHP Version: 5.6.12
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Database: `museum`
---
-
--- --------------------------------------------------------
-
---
--- Table structure for table `autor`
---
-
-CREATE TABLE IF NOT EXISTS `autor` (
-  `autor_id` int(10) unsigned NOT NULL,
-  `vorname` varchar(50) NOT NULL,
-  `nachname` varchar(50) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `autor`
---
-
-INSERT INTO `autor` (`autor_id`, `vorname`, `nachname`) VALUES
-(1, 'Biography.com', 'Editors'),
-(2, 'Sybille', 'Krämer'),
-(3, 'Eberhard', 'Fennel'),
-(4, 'Horst-Dieter', 'Brähmig'),
-(5, 'Wilhelm', 'Mons'),
-(6, 'Horst', 'Zuse'),
-(7, 'Hermann', 'Flessner'),
-(8, 'Jürgen', 'Alex'),
-(9, 'Kurt', 'Pauli'),
-(10, 'Klaus', 'Kemper'),
-(11, 'Veronika', 'Oechtering'),
-(12, 'Barry', 'Cooper'),
-(13, 'Jan', 'van Leeuwen'),
-(14, 'Michael-Thomas', 'Liske'),
-(15, 'Anne', 'Kunze');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `benutzer`
---
-
-CREATE TABLE IF NOT EXISTS `benutzer` (
-  `benutzer_id` smallint(5) unsigned NOT NULL,
-  `benutzername` varchar(50) NOT NULL,
-  `email` varchar(50) DEFAULT NULL,
-  `passwort` varchar(100) DEFAULT NULL,
-  `rolle_id` int(11) NOT NULL,
-  `erstellt_am` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `letzter_besuch` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `bilder`
---
-
-CREATE TABLE IF NOT EXISTS `bilder` (
-  `bild_id` int(10) unsigned NOT NULL,
-  `bild_link` varchar(100) NOT NULL,
-  `beschreibung` text,
-  `informatiker` int(10) unsigned NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `informatiker`
---
-
-CREATE TABLE IF NOT EXISTS `informatiker` (
-  `informatiker_id` int(10) unsigned NOT NULL,
-  `vorname` varchar(50) NOT NULL,
-  `nachname` varchar(50) NOT NULL,
-  `geburtsdatum` date DEFAULT NULL,
-  `geburtsort` varchar(50) DEFAULT NULL,
-  `todesdatum` date DEFAULT NULL,
-  `todesort` varchar(50) DEFAULT NULL,
-  `zitat` varchar(1000) DEFAULT NULL,
-  `k_beschreibung` varchar(50) DEFAULT NULL,
-  `l_beschreibung` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `informatiker_kategorie`
---
-
-CREATE TABLE IF NOT EXISTS `informatiker_kategorie` (
-  `inf_kat_id` smallint(5) unsigned NOT NULL,
-  `informatiker` int(10) unsigned NOT NULL,
-  `kategorie` smallint(5) unsigned NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='\n';
-
--- --------------------------------------------------------
-
---
--- Table structure for table `informatiker_quelle`
---
-
-CREATE TABLE IF NOT EXISTS `informatiker_quelle` (
-  `informatiker_quelle_id` int(11) NOT NULL,
-  `informatiker` int(10) unsigned NOT NULL,
-  `quelle` int(10) unsigned NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `kategorie`
---
-
-CREATE TABLE IF NOT EXISTS `kategorie` (
-  `kategorie_id` smallint(5) unsigned NOT NULL,
-  `kategorie_name` varchar(45) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='\n';
-
---
--- Dumping data for table `kategorie`
---
-
-INSERT INTO `kategorie` (`kategorie_id`, `kategorie_name`) VALUES
-(1, 'Mathematiker/in'),
-(2, 'Computerpionier/in'),
-(3, 'Ingenieur/in'),
-(4, 'Erfinder/in'),
-(5, 'Unternehmer/in');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `person`
---
-
-CREATE TABLE IF NOT EXISTS `person` (
-  `id` int(10) unsigned NOT NULL,
-  `vorname` varchar(50) NOT NULL,
-  `nachname` varchar(50) NOT NULL,
-  `geburtsdatum` date DEFAULT NULL,
-  `geburtsort` varchar(50) DEFAULT NULL,
-  `todesdatum` date DEFAULT NULL,
-  `todesort` varchar(50) DEFAULT NULL,
-  `k_beschreibung` varchar(500) DEFAULT NULL,
-  `l_beschreibung` varchar(1000) DEFAULT NULL,
-  `titel` set('Prof.','Dr.') DEFAULT NULL,
-  `geschlecht` set('f','m') NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `person`
---
-
-INSERT INTO `person` (`id`, `vorname`, `nachname`, `geburtsdatum`, `geburtsort`, `todesdatum`, `todesort`, `k_beschreibung`, `l_beschreibung`, `titel`, `geschlecht`) VALUES
-(1, 'Ada', 'Lovelace', '1815-12-10', 'London', '1852-11-27', 'London', 'Lovelace veröffentlichte als erste ein Programm für einen Rechner und legte\n\ndie theoretischen Grundlagen für automatisierte Programmabläufe.', 'Lovelace kommt aus einer Adelsfamilie und erhält früh eine\n\nnaturwissenschaftliche Ausbildung. Aufgrund ihrer Interessen entwickelte sie \n\nbald Kontakte zu wissenschaftsorientierten Kreisen.\n\n 1843 übersetzt Lovelace „Analytical Engine“ mit umfangreichen \n\nKommentierungen ins Englische. Der Artikel enthält die Beschreibung  einer \n\nmechanischen Rechenmaschine von Charles Babbage. Daneben entwickelt \n\nsie mit Babbage ein Programm zur Berechnung der Bernoulli-Zahlen mittels \n\nder Rechenmaschine. \n\nAdas systematisierte Abfolge von mathematischen  Operationen bildet bis \n\nheute die Grundlage der Programmierung. Außerdem liefert sie wichtige \n\ntheoretische Beiträge im Bereich der Rechenarchitektur. Sie beschäftigt sich \n\nmit der Bedeutung der Rechenmaschine für die Gesellschaft, als auch mit \n\neinzelnen Systemkomponenten.\n\nIhre Überlegungen erhalten zu ihren Lebzeiten wenig Aufmerksamkeit. Sie \n\nstirbt mit 37 Jahren an Krebs.', NULL, 'f'),
-(2, 'Konrad', 'Zuse', '1910-06-22', 'Berlin-Wilmersdorf', '1995-12-18', 'Hünfeld', 'Zuse war ein deutscher Computerpionier, der als erster einen\r\n\r\nvollautomatischen und frei programmierbaren Digitalrechner baute.', 'Nach seinem Ingenieurstudium bis 1935 baut Zuse im elterlichen Haus eine\r\n\r\nprogrammierbare Rechenmaschine. Die Z1 arbeitete mit binärer \r\n\r\nGleitkommaarithmetik, besaß ein Ein- und Ausgabewerk, ein Rechenwerk, \r\n\r\nsowie ein Speicher- und ein Programmwerk. Aufgrund mechanischer \r\n\r\nProbleme war die Z1 jedoch nicht voll funktionsfähig. \r\n\r\nDer erste funktionsfähige Digitalrechner ist die Z3, die Zuse zusammen mit \r\n\r\nHelmut Schreyer 1941 baut. Die Z3 wird im Gegensatz zur Z1 über \r\n\r\nelektromagnetische Relaistechnik betrieben. \r\n\r\nBis 1945 entwickelte Zuse eine Algorithmensprache, das sogenannte \r\n\r\nPlankalkül, das als Vorlage für höhere Programmiersprachen gedient hat.\r\n\r\n 1949 gründet Zuse die Zuse KG, die 1956 mit der Serienfertigung begann und \r\n\r\nEuropa mit den ersten Computern belieferte.', 'Dr.', 'm'),
-(3, 'Heinz', 'Nixdorf', '1925-04-09', 'Paderborn', '1986-03-17', 'Hannover', 'Nixdorf schuf aus einfachen Verhältnissen kommend eine internationale Computerfirma, die den Durchbruch der Kleinrechner förderte.', '1952 brach Nixdorf als mittelloser Student sein Physikstudium ab um mit 27 Jahren ein eigenes Computerlabor zu gründen. Bereits als Werkstudent arbeitete er an der Entwicklung einfacher Rechner mit und konnte so sein eigenes Konzept eines Elektronenrechners aus Röhren emtwerfem. 1954 verkaufte das Labor für Impulstechnik den ersten in Deutschland gebauten Röhrencomputer an die Buchhaltung der Rheinisch-Westfälischen Elektrizitätswerke.Das Unternehmen entwickelte sich schnell zu einem Zulieferer für elektronische Rechenwerke. Trotz finanzieller Engpässe und der Konkurrenz von Großunternehmen wuchs das Labor bis 1961 auf 50 Mitarbeiter. 1965 wurde der erste Tischrechner präsentiert, wobei der auf Halbleitertechnik basierender Kleincomputer des Entwicklungsingenieurs Otto Müller eine technische Revolution auslöste. Mit der Übernahme der Wanderwerke 1968 wurde die Nixdorf Computer AG gegründet. Durch die Übernahme eines amerikanischen Unternehmens konnte Nixdorf auf den amerikanischen Mark', NULL, 'm'),
-(4, 'Grace Brewster', 'Hopper', '1906-12-09', 'New York', '1992-01-01', 'Arlinton', 'Als herausragende Computerspezialistin entwickelte Hopper viele Pionierprojekte in der Computertechnik und programmierte den ersten Compiler.', 'Hopper schlug nach ihrem Studium der Mathematik und Physik eine wissenschaftliche Laufbahn ein. Nach der Promotion 1934 an der Yale University, unterrichtet sie Mathematik am Vassar College. Während des 2. Weltkriegs beginnt Hopper eine militärische Ausbildung und arbeitet zeitgleich an der Harvard Universität im Computerlabor. In den folgenden Jahren spezialisiert sie sich auf die Programmierung und entwickelt den ersten Compiler 1957. Nach einer beruflichen Tätigkeit in der Wirtschaft geht sie in den Ruhestand. Hopper wird jedoch vom amerikanischen Militär wieder in den aktiven Dienst gerufen und arbeitet bis ins hohe Alter als Computerspezialistin. Als herausragende Pionierin in der Entwicklung moderner Computersysteme erhielt sie zahlreiche Auszeichnungen für ihre Leistungen, darunter über 40 Mal die Ehrendoktorwürde.', 'Prof.', 'f'),
-(5, 'Alan Mathison', 'Turing', '1912-06-23', 'London', '1954-06-07', 'Wilmslow', 'Turing entwickelt die nach ihm benannte Berechnungsmodell der Turingmaschine und arbeitet an der Entzifferung der Enigma-Verschlüsselungstechnik.', 'In jungen Jahren beweist Turing bereits seine mathematische Problemlösungskompetenz und entwickelt als 24 jähriger ein einfaches Modell zu Hilberts Entscheidungsproblem. Die sogenannte Turingmaschine liefert ein Rechenmodell zur Lösung beliebiger mathematischer Probleme in der Form eines spezifischen Algorithmus. 1938 erweitert er die Turingmaschine um nicht durch Algorithmen lösbare Probleme ebenfalls analysieren können. Während des Zweiten Weltkriegs arbeite er als Kryptoanalytiker an der Entschlüsselung der Enigma-Maschine. Anschließend geht er in den Lehrdienst und schreibt entscheidende Beiträge zur theoretischen Informatik. Ebenso entwickelt er den ersten Schachcomputer sowie den Turing-Test zur Messung künstlicher Intelligenz.', 'Dr.', 'm'),
-(6, 'Gottfried Wilhelm ', 'Leibniz', '1646-07-01', 'Leipzig', '1716-11-14', 'Hannover', 'Leibniz entwickelt als Universalgelehrter das duale Zahlensystem.', 'Leibniz war ein Universalgelehrter zur Zeit der Aufklärung. Schon als Kind beschäftigt er sich mit logischen Fragestellungen. Mit 26 Jahren erstellt er eine Rechenmaschine für die vier Grundrechenarten, die mittels Staffelwalzen betrieben wird. Sein wichtigster Beitrag für die moderne Informatik ist die Entdeckung des dualen Zahlensystems. Als Mathematiker beschäftigt er sich umfangreich mit Differenzial- und Integralrechnung. \r\nZahlreiche Initiativen gehen auf ihn zurück, sodass er als großer Denker des 18. Jahrhunderts gilt.', NULL, 'm');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `person_bilder`
---
-
-CREATE TABLE IF NOT EXISTS `person_bilder` (
-  `id` int(10) unsigned NOT NULL,
-  `person_id` int(11) unsigned NOT NULL,
-  `bilder_id` int(10) unsigned NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='\n';
-
--- --------------------------------------------------------
-
---
--- Table structure for table `person_kategorie`
---
-
-CREATE TABLE IF NOT EXISTS `person_kategorie` (
-  `id` int(10) unsigned NOT NULL,
-  `person_id` int(10) unsigned NOT NULL,
-  `kategorie_id` int(10) unsigned NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='\n';
-
---
--- Dumping data for table `person_kategorie`
---
-
-INSERT INTO `person_kategorie` (`id`, `person_id`, `kategorie_id`) VALUES
-(1, 1, 1),
-(2, 2, 2),
-(3, 2, 3),
-(4, 2, 4),
-(5, 2, 5),
-(6, 3, 5),
-(7, 4, 1),
-(8, 4, 2),
-(9, 5, 1),
-(10, 6, 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `person_quelle`
---
-
-CREATE TABLE IF NOT EXISTS `person_quelle` (
-  `id` int(11) NOT NULL,
-  `person_id` int(10) unsigned NOT NULL,
-  `quelle_id` int(10) unsigned NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `person_quelle`
---
-
-INSERT INTO `person_quelle` (`id`, `person_id`, `quelle_id`) VALUES
-(1, 1, 1),
-(2, 1, 2),
-(3, 1, 3),
-(4, 2, 4),
-(5, 3, 5),
-(6, 4, 6),
-(7, 5, 7),
-(8, 6, 8);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `quelle`
---
-
-CREATE TABLE IF NOT EXISTS `quelle` (
-  `quelle_id` int(10) unsigned NOT NULL,
-  `titel` varchar(50) NOT NULL,
-  `isbn` varchar(50) DEFAULT NULL,
-  `link` varchar(50) DEFAULT NULL,
-  `typ` varchar(20) NOT NULL,
-  `jahr` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `quelle`
---
-
-INSERT INTO `quelle` (`quelle_id`, `titel`, `isbn`, `link`, `typ`, `jahr`) VALUES
-(1, 'Ada und der Algorithmus', NULL, 'http://www.zeit.de/2014/05/ada-lovelace-programmie', 'Zeitschrift ', 2014),
-(2, 'Ada Lovelace Biography', NULL, 'http://www.biography.com/people/ada-lovelace-20825', 'Lexikon', 2015),
-(3, 'Ada Lovelace: Die Pionierin der Computertechnik un', '9783770559862', NULL, 'Buch', 2015),
-(4, 'Konrad Zuse: Der Vater des Computers', '3790003174', NULL, 'Buch', 2000),
-(5, 'Heinz Nixdorf: eine deutsche Karriere', '3478301203', NULL, 'Buch', 1986),
-(6, 'Grace Hopper', NULL, 'http://www.frauen-informatik-geschichte.de/index.p', '', NULL),
-(7, 'Alan Turing: his Work and Impact', '9780123869807', NULL, 'Buch', 2013),
-(8, 'Gottfried Wilhelm Leibnis', '3406419550', NULL, 'Buch', 2000);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `quelle_autor`
---
-
-CREATE TABLE IF NOT EXISTS `quelle_autor` (
-  `quelle_autor_id` int(10) unsigned NOT NULL,
-  `quelle` int(10) unsigned NOT NULL,
-  `autor` int(10) unsigned NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COMMENT='\n';
-
---
--- Dumping data for table `quelle_autor`
---
-
-INSERT INTO `quelle_autor` (`quelle_autor_id`, `quelle`, `autor`) VALUES
-(1, 1, 15),
-(2, 2, 1),
-(3, 3, 2),
-(4, 4, 3),
-(5, 4, 4),
-(6, 4, 5),
-(7, 4, 6),
-(8, 4, 7),
-(9, 4, 8),
-(10, 4, 9),
-(11, 5, 10),
-(12, 6, 11),
-(13, 7, 12),
-(14, 7, 13),
-(15, 8, 14);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `quelle_verlag`
---
-
-CREATE TABLE IF NOT EXISTS `quelle_verlag` (
-  `quelle_verlag_id` int(10) unsigned NOT NULL,
-  `quelle` int(10) unsigned NOT NULL,
-  `verlag` int(10) unsigned DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `quelle_verlag`
---
-
-INSERT INTO `quelle_verlag` (`quelle_verlag_id`, `quelle`, `verlag`) VALUES
-(1, 1, 1),
-(2, 2, 2),
-(3, 3, 3),
-(4, 4, 4),
-(5, 5, 5),
-(6, 6, NULL),
-(7, 7, 7),
-(8, 8, 6);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `rolle`
---
-
-CREATE TABLE IF NOT EXISTS `rolle` (
-  `rolle_id` int(11) NOT NULL,
-  `rollenname` enum('Admin','User') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `verlag`
---
-
-CREATE TABLE IF NOT EXISTS `verlag` (
-  `verlag_id` int(10) unsigned NOT NULL,
-  `verlag_titel` varchar(50) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `verlag`
---
-
-INSERT INTO `verlag` (`verlag_id`, `verlag_titel`) VALUES
-(1, 'DIE ZEIT'),
-(2, 'A&E Televsion Networks'),
-(3, 'Wilhelm Fink'),
-(4, 'Parzeller'),
-(5, 'Moderne Industrie'),
-(6, 'Beck'),
-(7, 'Elsevier');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `zitat`
---
-
-CREATE TABLE IF NOT EXISTS `zitat` (
-  `id` int(10) unsigned NOT NULL,
-  `text` text NOT NULL,
-  `quelle` varchar(50) DEFAULT NULL,
-  `link` varchar(50) DEFAULT NULL,
-  `jahr` int(11) DEFAULT NULL,
-  `seite` varchar(50) DEFAULT NULL,
-  `person_id` int(10) unsigned NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='\n';
-
---
--- Dumping data for table `zitat`
---
-
-INSERT INTO `zitat` (`id`, `text`, `quelle`, `link`, `jahr`, `seite`, `person_id`) VALUES
-(1, 'Die Maschine kann nur tun, was wir ihr zu befehlen wissen', NULL, 'http://www.bk-luebeck.eu/zitate-lovelace.html', NULL, NULL, 1),
-(2, 'Die Gefahr, dass der Computer so wird wie der Mensch, ist nicht so groß wie die Gefahr, dass der Mensch so wird wie der Computer.', NULL, 'http://zitate.net/konrad-zuse-zitate', NULL, NULL, 2),
-(3, 'Computer müssen so klein sein, dass sie in die linke untere Schublade eines Buchhalter-Schreibtisches passen. ', NULL, 'https://de.wikipedia.org/wiki/Heinz_Nixdorf', NULL, NULL, 3),
-(4, 'Wenn es eine gute Idee ist, dann mach es einfach. Es ist viel einfacher sich nachher zu entschuldigen als vorher die Genehmigung zu bekommen.', NULL, 'http://einstieg-informatik.de', NULL, NULL, 4),
-(5, 'Wir können nur eine kurze Distanz in die Zukunft blicken, aber dort können wir eine Menge sehen, was getan werden muss.', 'Computing Machinery and Intelligence', NULL, 1950, NULL, 5),
-(6, 'Beim Erwachen hatte ich schon so viele Einfälle, dass der Tag nicht ausreichte, um sie niederzuschreiben.', NULL, 'https://de.wikipedia.org/wiki/Gottfried_Wilhelm_Le', NULL, NULL, 6);
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `autor`
---
-ALTER TABLE `autor`
-  ADD PRIMARY KEY (`autor_id`);
-
---
--- Indexes for table `benutzer`
---
-ALTER TABLE `benutzer`
-  ADD PRIMARY KEY (`benutzer_id`),
-  ADD KEY `fk_benutzer_rolle_idx` (`rolle_id`);
-
---
--- Indexes for table `bilder`
---
-ALTER TABLE `bilder`
-  ADD PRIMARY KEY (`bild_id`),
-  ADD UNIQUE KEY `person_id` (`informatiker`),
-  ADD UNIQUE KEY `person_id_2` (`informatiker`),
-  ADD KEY `fk_bilder_informatiker_idx` (`informatiker`),
-  ADD KEY `person_id_3` (`informatiker`),
-  ADD KEY `person_id_4` (`informatiker`),
-  ADD KEY `informatiker` (`informatiker`),
-  ADD KEY `informatiker_2` (`informatiker`);
-
---
--- Indexes for table `informatiker`
---
-ALTER TABLE `informatiker`
-  ADD PRIMARY KEY (`informatiker_id`),
-  ADD KEY `informatiker_nachname_idx` (`nachname`);
-
---
--- Indexes for table `informatiker_kategorie`
---
-ALTER TABLE `informatiker_kategorie`
-  ADD PRIMARY KEY (`inf_kat_id`),
-  ADD KEY `fk_informatiker_kategorie_informatiker1_idx` (`informatiker`),
-  ADD KEY `fk_informatiker_kategorie_kategorie1_idx` (`kategorie`);
-
---
--- Indexes for table `informatiker_quelle`
---
-ALTER TABLE `informatiker_quelle`
-  ADD PRIMARY KEY (`informatiker_quelle_id`),
-  ADD KEY `fk_informatiker_quelle_informatiker_idx` (`informatiker`),
-  ADD KEY `fk_informatiker_quelle_quelle_idx` (`quelle`);
-
---
--- Indexes for table `kategorie`
---
-ALTER TABLE `kategorie`
-  ADD PRIMARY KEY (`kategorie_id`);
-
---
--- Indexes for table `person`
---
-ALTER TABLE `person`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `informatiker_nachname_idx` (`nachname`);
-
---
--- Indexes for table `person_bilder`
---
-ALTER TABLE `person_bilder`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_person_bilder_bilder1_idx` (`bilder_id`);
-
---
--- Indexes for table `person_kategorie`
---
-ALTER TABLE `person_kategorie`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_informatiker_kategorie_informatiker1_idx` (`person_id`),
-  ADD KEY `fk_informatiker_kategorie_kategorie1_idx` (`kategorie_id`);
-
---
--- Indexes for table `person_quelle`
---
-ALTER TABLE `person_quelle`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_informatiker_quelle_informatiker_idx` (`person_id`),
-  ADD KEY `fk_informatiker_quelle_quelle_idx` (`quelle_id`);
-
---
--- Indexes for table `quelle`
---
-ALTER TABLE `quelle`
-  ADD PRIMARY KEY (`quelle_id`);
-
---
--- Indexes for table `quelle_autor`
---
-ALTER TABLE `quelle_autor`
-  ADD PRIMARY KEY (`quelle_autor_id`),
-  ADD KEY `fk_quelle_autor_quelle1_idx` (`quelle`),
-  ADD KEY `fk_quelle_autor_autor1_idx` (`autor`);
-
---
--- Indexes for table `quelle_verlag`
---
-ALTER TABLE `quelle_verlag`
-  ADD PRIMARY KEY (`quelle_verlag_id`),
-  ADD KEY `fk_quelle_verlag_quelle1_idx` (`quelle`),
-  ADD KEY `fk_quelle_verlag_verlag1_idx` (`verlag`);
-
---
--- Indexes for table `rolle`
---
-ALTER TABLE `rolle`
-  ADD PRIMARY KEY (`rolle_id`);
-
---
--- Indexes for table `verlag`
---
-ALTER TABLE `verlag`
-  ADD PRIMARY KEY (`verlag_id`);
-
---
--- Indexes for table `zitat`
---
-ALTER TABLE `zitat`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_zitat_person1_idx` (`person_id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `autor`
---
-ALTER TABLE `autor`
-  MODIFY `autor_id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
---
--- AUTO_INCREMENT for table `benutzer`
---
-ALTER TABLE `benutzer`
-  MODIFY `benutzer_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `bilder`
---
-ALTER TABLE `bilder`
-  MODIFY `bild_id` int(10) unsigned NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `informatiker`
---
-ALTER TABLE `informatiker`
-  MODIFY `informatiker_id` int(10) unsigned NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `informatiker_kategorie`
---
-ALTER TABLE `informatiker_kategorie`
-  MODIFY `inf_kat_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `informatiker_quelle`
---
-ALTER TABLE `informatiker_quelle`
-  MODIFY `informatiker_quelle_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `kategorie`
---
-ALTER TABLE `kategorie`
-  MODIFY `kategorie_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
---
--- AUTO_INCREMENT for table `person`
---
-ALTER TABLE `person`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
---
--- AUTO_INCREMENT for table `person_bilder`
---
-ALTER TABLE `person_bilder`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `person_kategorie`
---
-ALTER TABLE `person_kategorie`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
---
--- AUTO_INCREMENT for table `person_quelle`
---
-ALTER TABLE `person_quelle`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
---
--- AUTO_INCREMENT for table `quelle`
---
-ALTER TABLE `quelle`
-  MODIFY `quelle_id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
---
--- AUTO_INCREMENT for table `quelle_autor`
---
-ALTER TABLE `quelle_autor`
-  MODIFY `quelle_autor_id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
---
--- AUTO_INCREMENT for table `quelle_verlag`
---
-ALTER TABLE `quelle_verlag`
-  MODIFY `quelle_verlag_id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
---
--- AUTO_INCREMENT for table `rolle`
---
-ALTER TABLE `rolle`
-  MODIFY `rolle_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `verlag`
---
-ALTER TABLE `verlag`
-  MODIFY `verlag_id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
---
--- AUTO_INCREMENT for table `zitat`
---
-ALTER TABLE `zitat`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `benutzer`
---
-ALTER TABLE `benutzer`
-  ADD CONSTRAINT `fk_benutzer_rolle` FOREIGN KEY (`rolle_id`) REFERENCES `rolle` (`rolle_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `bilder`
---
-ALTER TABLE `bilder`
-  ADD CONSTRAINT `fk_bilder_informatiker` FOREIGN KEY (`informatiker`) REFERENCES `informatiker` (`informatiker_id`) ON UPDATE CASCADE;
-
---
--- Constraints for table `informatiker_kategorie`
---
-ALTER TABLE `informatiker_kategorie`
-  ADD CONSTRAINT `fk_informatiker_kategorie_informatiker1` FOREIGN KEY (`informatiker`) REFERENCES `informatiker` (`informatiker_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_informatiker_kategorie_kategorie1` FOREIGN KEY (`kategorie`) REFERENCES `kategorie` (`kategorie_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `informatiker_quelle`
---
-ALTER TABLE `informatiker_quelle`
-  ADD CONSTRAINT `fk_informatiker_quelle_informatiker` FOREIGN KEY (`informatiker`) REFERENCES `informatiker` (`informatiker_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_informatiker_quelle_quelle` FOREIGN KEY (`quelle`) REFERENCES `quelle` (`quelle_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `quelle_autor`
---
-ALTER TABLE `quelle_autor`
-  ADD CONSTRAINT `fk_quelle_autor_autor1` FOREIGN KEY (`autor`) REFERENCES `autor` (`autor_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_quelle_autor_quelle1` FOREIGN KEY (`quelle`) REFERENCES `quelle` (`quelle_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `quelle_verlag`
---
-ALTER TABLE `quelle_verlag`
-  ADD CONSTRAINT `fk_quelle_verlag_quelle1` FOREIGN KEY (`quelle`) REFERENCES `quelle` (`quelle_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_quelle_verlag_verlag1` FOREIGN KEY (`verlag`) REFERENCES `verlag` (`verlag_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+-- -----------------------------------------------------
+-- Schema museum
+-- -----------------------------------------------------
+SET FOREIGN_KEY_CHECKS=0;
+
+CREATE SCHEMA IF NOT EXISTS `museum` ;
+USE `museum` ;
+
+
+-- -----------------------------------------------------
+-- Table `museum`.`person_quelle`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `museum`.`person_quelle` ;
+
+CREATE TABLE IF NOT EXISTS `museum`.`person_quelle` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `person_id` INT UNSIGNED NULL,
+  `quelle_id` INT UNSIGNED NOT NULL,
+  INDEX `fk_informatiker_quelle_informatiker_idx` (`person_id` ASC) ,
+  INDEX `fk_informatiker_quelle_quelle_idx` (`quelle_id` ASC) ,
+  PRIMARY KEY (`id`) ,
+  CONSTRAINT `fk_informatiker_quelle_informatiker`
+    FOREIGN KEY (`person_id`)
+    REFERENCES `museum`.`person` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_informatiker_quelle_quelle`
+    FOREIGN KEY (`quelle_id`)
+    REFERENCES `museum`.`quelle` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `museum`.`person_kategorie`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `museum`.`person_kategorie` ;
+
+CREATE TABLE IF NOT EXISTS `museum`.`person_kategorie` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `person_id` INT UNSIGNED NULL,
+  `kategorie_id` INT UNSIGNED NULL,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_informatiker_kategorie_informatiker_idx` (`person_id` ASC) ,
+  INDEX `fk_informatiker_kategorie_kategorie_idx` (`kategorie_id` ASC) ,
+  CONSTRAINT `fk_informatiker_kategorie_informatiker`
+    FOREIGN KEY (`person_id`)
+    REFERENCES `museum`.`person` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_informatiker_kategorie_kategorie`
+    FOREIGN KEY (`kategorie_id`)
+    REFERENCES `museum`.`kategorie` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `museum`.`person_bilder`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `museum`.`person_bilder` ;
+
+CREATE TABLE IF NOT EXISTS `museum`.`person_bilder` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `person_id` INT UNSIGNED NULL,
+  `bilder_id` INT UNSIGNED NULL,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_person_bilder_person1_idx` (`person_id` ASC) ,
+  INDEX `fk_person_bilder_bilder1_idx` (`bilder_id` ASC) ,
+  CONSTRAINT `fk_person_bilder_person1`
+    FOREIGN KEY (`person_id`)
+    REFERENCES `museum`.`person` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_person_bilder_bilder1`
+    FOREIGN KEY (`bilder_id`)
+    REFERENCES `museum`.`bilder` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `museum`.`person`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `museum`.`person` ;
+
+CREATE TABLE IF NOT EXISTS `museum`.`person` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `vorname` VARCHAR(50) NOT NULL,
+  `nachname` VARCHAR(50) NOT NULL,
+  `geburtsdatum` DATE NULL,
+  `geburtsort` VARCHAR(50) NULL,
+  `todesdatum` DATE NULL,
+  `todesort` VARCHAR(50) NULL,
+  `k_beschreibung` VARCHAR(1000) NULL,
+  `l_beschreibung` VARCHAR(10000) NULL,
+  `titel` SET('Prof.', 'Dr.') NULL,
+  `geschlecht` SET('f', 'm') NOT NULL,
+  PRIMARY KEY (`id`) ,
+  INDEX `informatiker_nachname_idx` (`nachname` ASC) )
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `museum`.`quelle_autor`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `museum`.`quelle_autor` ;
+
+CREATE TABLE IF NOT EXISTS `museum`.`quelle_autor` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `quelle_id` INT UNSIGNED NULL,
+  `autor_id` INT UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_quelle_autor_quelle1_idx` (`quelle_id` ASC) ,
+  INDEX `fk_quelle_autor_autor1_idx` (`autor_id` ASC) ,
+  CONSTRAINT `fk_quelle_autor_quelle1`
+    FOREIGN KEY (`quelle_id`)
+    REFERENCES `museum`.`quelle` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_quelle_autor_autor1`
+    FOREIGN KEY (`autor_id`)
+    REFERENCES `museum`.`autor` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `museum`.`quelle_verlag`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `museum`.`quelle_verlag` ;
+
+CREATE TABLE IF NOT EXISTS `museum`.`quelle_verlag` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `quelle_id` INT UNSIGNED NULL,
+  `verlag_id` INT UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_quelle_verlag_quelle1_idx` (`quelle_id` ASC) ,
+  INDEX `fk_quelle_verlag_verlag1_idx` (`verlag_id` ASC) ,
+  CONSTRAINT `fk_quelle_verlag_quelle1`
+    FOREIGN KEY (`quelle_id`)
+    REFERENCES `museum`.`quelle` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_quelle_verlag_verlag1`
+    FOREIGN KEY (`verlag_id`)
+    REFERENCES `museum`.`verlag` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `museum`.`quelle`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `museum`.`quelle` ;
+
+CREATE TABLE IF NOT EXISTS `museum`.`quelle` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `titel` VARCHAR(50) NOT NULL,
+  `isbn` VARCHAR(50) NULL,
+  `link` VARCHAR(50) NULL,
+  `typ` VARCHAR(45) NULL,
+  `jahr` INT NULL,
+  PRIMARY KEY (`id`) )
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `museum`.`autor`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `museum`.`autor` ;
+
+CREATE TABLE IF NOT EXISTS `museum`.`autor` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `vorname` VARCHAR(50) NOT NULL,
+  `nachname` VARCHAR(50) NOT NULL,
+  PRIMARY KEY (`id`) )
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `museum`.`kategorie`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `museum`.`kategorie` ;
+
+CREATE TABLE IF NOT EXISTS `museum`.`kategorie` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `beschreibung` TEXT NULL,
+  PRIMARY KEY (`id`) )
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `museum`.`rolle`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `museum`.`rolle` ;
+
+CREATE TABLE IF NOT EXISTS `museum`.`rolle` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` ENUM('Admin', 'User') NOT NULL,
+  PRIMARY KEY (`id`) )
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `museum`.`benutzer`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `museum`.`benutzer` ;
+
+CREATE TABLE IF NOT EXISTS `museum`.`benutzer` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `benutzername` VARCHAR(50) NOT NULL,
+  `email` VARCHAR(50) NULL,
+  `passwort` VARCHAR(100) NULL,
+  `rolle_id` INT NULL,
+  `erstellt_am` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `letzter_besuch` DATETIME NOT NULL,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_benutzer_rolle_idx` (`rolle_id` ASC) ,
+  CONSTRAINT `fk_benutzer_rolle`
+    FOREIGN KEY (`rolle_id`)
+    REFERENCES `museum`.`rolle` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `museum`.`verlag`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `museum`.`verlag` ;
+
+CREATE TABLE IF NOT EXISTS `museum`.`verlag` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(50) NOT NULL,
+  PRIMARY KEY (`id`) )
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `museum`.`bilder`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `museum`.`bilder` ;
+
+CREATE TABLE IF NOT EXISTS `museum`.`bilder` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `pfad` VARCHAR(100) NOT NULL,
+  `beschreibung` TEXT NULL,
+  `link` VARCHAR(100) NULL,
+  PRIMARY KEY (`id`) )
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `museum`.`zitat`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `museum`.`zitat` ;
+
+CREATE TABLE IF NOT EXISTS `museum`.`zitat` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `text` TEXT NOT NULL,
+  `quelle` VARCHAR(50) NULL,
+  `link` VARCHAR(50) NULL,
+  `jahr` INT NULL,
+  `seite` VARCHAR(50) NULL,
+  `person_id` INT UNSIGNED NULL,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_zitat_person1_idx` (`person_id` ASC) ,
+  CONSTRAINT `fk_zitat_person1`
+    FOREIGN KEY (`person_id`)
+    REFERENCES `museum`.`person` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+DEFAULT CHARACTER SET = utf8;
+
+
+
+
+
+-- -----------------------------------------------------
+-- Data for table `museum`.`person`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `museum`;
+INSERT INTO `museum`.`person` (`id`, `vorname`, `nachname`, `geburtsdatum`, `geburtsort`, `todesdatum`, `todesort`, `k_beschreibung`, `l_beschreibung`, `titel`, `geschlecht`) VALUES (1, ' Ada', ' Lovelace', ' 1815-12-10', ' London', ' 1852-11-27', ' London', 'Lovelace veröffentlichte als erste ein Programm für einen Rechner und legtedie theoretischen Grundlagen für automatisierte Programmabläufe.', ' Lovelace kommt aus einer Adelsfamilie und erhält früh einenaturwissenschaftliche Ausbildung. Aufgrund ihrer Interessen entwickelte sie bald Kontakte zu wissenschaftsorientierten Kreisen. 1843 übersetzt Lovelace „Analytical Engine“ mit umfangreichen Kommentierungen ins Englische. Der Artikel enthält die Beschreibung  einer mechanischen Rechenmaschine von Charles Babbage. Daneben entwickelt sie mit Babbage ein Programm zur Berechnung der Bernoulli-Zahlen mittels der Rechenmaschine. Adas systematisierte Abfolge von mathematischen  Operationen bildet bis heute die Grundlage der Programmierung. Außerdem liefert sie wichtige theoretische Beiträge im Bereich der Rechenarchitektur. Sie beschäftigt sich mit der Bedeutung der Rechenmaschine für die Gesellschaft,  als auch mit einzelnen Systemkomponenten. Ihre Überlegungen erhalten zu ihren Lebzeiten wenig Aufmerksamkeit. Sie stirbt mit 37 Jahren an Krebs.', 'NULL', 'f');
+INSERT INTO `museum`.`person` (`id`, `vorname`, `nachname`, `geburtsdatum`, `geburtsort`, `todesdatum`, `todesort`, `k_beschreibung`, `l_beschreibung`, `titel`, `geschlecht`) VALUES (2, ' Konrad', ' Zuse', ' 1910-06-22', ' Berlin-Wilmersdorf', ' 1995-12-18', ' Hünfeld', 'Zuse war ein deutscher Computerpionier, der als erster einen vollautomatischen und frei programmierbaren Digitalrechner baute.', 'Nach seinem Ingenieurstudium bis 1935 baut Zuse im elterlichen Haus eineprogrammierbare Rechenmaschine. Die Z1 arbeitete mit binärer Gleitkommaarithmetik, besaß ein Ein- und Ausgabewerk, ein Rechenwerk, sowie ein Speicher- und ein Programmwerk. Aufgrund mechanischer Probleme war die Z1 jedoch nicht voll funktionsfähig. Der erste funktionsfähige Digitalrechner ist die Z3, die Zuse zusammen mit Helmut Schreyer 1941 baut. Die Z3 wird im Gegensatz zur Z1 über elektromagnetische Relaistechnik betrieben. Bis 1945 entwickelte Zuse eine Algorithmensprache, das sogenannte Plankalkül, das als Vorlage für höhere Programmiersprachen gedient hat. 1949 gründet Zuse die Zuse KG, die 1956 mit der Serienfertigung begann und Europa mit den ersten Computern belieferte.', 'Dr.', 'm');
+INSERT INTO `museum`.`person` (`id`, `vorname`, `nachname`, `geburtsdatum`, `geburtsort`, `todesdatum`, `todesort`, `k_beschreibung`, `l_beschreibung`, `titel`, `geschlecht`) VALUES (3, ' Heinz', ' Nixdorf', ' 1925-04-09', ' Paderborn', ' 1986-03-17', ' Hannover', 'Nixdorf schuf aus einfachen Verhältnissen kommend eine internationale Computerfirma, die den Durchbruch der Kleinrechner förderte.', '1952 brach Nixdorf als mittelloser Student sein Physikstudium ab um mit 27 Jahren ein eigenes Computerlabor zu gründen. Bereits als Werkstudent arbeitete er an der Entwicklung einfacher Rechner mit und konnte so sein eigenes Konzept eines Elektronenrechners aus Röhren emtwerfem. 1954 verkaufte das Labor für Impulstechnik den ersten in Deutschland gebauten Röhrencomputer an die Buchhaltung der Rheinisch-Westfälischen Elektrizitätswerke. Das Unternehmen entwickelte sich schnell zu einem Zulieferer für elektronische Rechenwerke. Trotz finanzieller Engpässe und der Konkurrenz von Großunternehmen wuchs das Labor bis 1961 auf 50 Mitarbeiter. 1965 wurde der erste Tischrechner präsentiert, wobei der auf Halbleitertechnik basierender Kleincomputer des Entwicklungsingenieurs Otto Müller eine technische Revolution auslöste. Mit der Übernahme der Wanderwerke 1968 wurde die Nixdorf Computer AG gegründet. Durch die Übernahme eines amerikanischen Unternehmens konnte Nixdorf auf den amerikanischen Mark', 'NULL', 'm');
+INSERT INTO `museum`.`person` (`id`, `vorname`, `nachname`, `geburtsdatum`, `geburtsort`, `todesdatum`, `todesort`, `k_beschreibung`, `l_beschreibung`, `titel`, `geschlecht`) VALUES (4, ' Grace Brewster', ' Hopper', ' 1906-12-09', ' New York', ' 1992-01-01', ' Arlinton', 'Arlinton, Als herausragende Computerspezialistin entwickelte Hopper viele Pionierprojekte in der Computertechnik und programmierte den ersten Compiler.', 'Hopper schlug nach ihrem Studium der Mathematik und Physik eine wissenschaftliche Laufbahn ein. Nach der Promotion 1934 an der Yale University, unterrichtet sie Mathematik am Vassar College. Während des 2. Weltkriegs beginnt Hopper eine militärische Ausbildung und arbeitet zeitgleich an der Harvard Universität im Computerlabor. In den folgenden Jahren spezialisiert sie sich auf die Programmierung und entwickelt den ersten Compiler 1957. Nach einer beruflichen Tätigkeit in der Wirtschaft geht sie in den Ruhestand. Hopper wird jedoch vom amerikanischen Militär wieder in den aktiven Dienst gerufen und arbeitet bis ins hohe Alter als Computerspezialistin. Als herausragende Pionierin in der Entwicklung moderner Computersysteme erhielt sie zahlreiche Auszeichnungen für ihre Leistungen, darunter über 40 Mal die Ehrendoktorwürde.', 'Prof.', 'f');
+INSERT INTO `museum`.`person` (`id`, `vorname`, `nachname`, `geburtsdatum`, `geburtsort`, `todesdatum`, `todesort`, `k_beschreibung`, `l_beschreibung`, `titel`, `geschlecht`) VALUES (5, ' Alan Mathison', ' Turing', ' 1912-06-23', ' London', ' 1954-06-07', ' Wilmslow', 'Turing entwickelt die nach ihm benannte Berechnungsmodell der Turingmaschine und arbeitet an der Entzifferung der Enigma-Verschlüsselungstechnik.', 'In jungen Jahren beweist Turing bereits seine mathematische Problemlösungskompetenz und entwickelt als 24 jähriger ein einfaches Modell zu Hilberts Entscheidungsproblem. Die sogenannte Turingmaschine liefert ein Rechenmodell zur Lösung beliebiger mathematischer Probleme in der Form eines spezifischen Algorithmus. 1938 erweitert er die Turingmaschine um nicht durch Algorithmen lösbare Probleme ebenfalls analysieren können. Während des Zweiten Weltkriegs arbeite er als Kryptoanalytiker an der Entschlüsselung der Enigma-Maschine. Anschließend geht er in den Lehrdienst und schreibt entscheidende Beiträge zur theoretischen Informatik. Ebenso entwickelt er den ersten Schachcomputer sowie den Turing-Test zur Messung künstlicher Intelligenz.', ' Dr.', 'm');
+INSERT INTO `museum`.`person` (`id`, `vorname`, `nachname`, `geburtsdatum`, `geburtsort`, `todesdatum`, `todesort`, `k_beschreibung`, `l_beschreibung`, `titel`, `geschlecht`) VALUES (6, ' Gottfried Wilhelm ', ' Leibniz', ' 1646-07-01', ' Leipzig', ' 1716-11-14', ' Hannover', 'Leibniz entwickelt als Universalgelehrter das duale Zahlensystem.', 'Leibniz war ein Universalgelehrter zur Zeit der Aufklärung. Schon als Kind beschäftigt er sich mit logischen Fragestellungen. Mit 26 Jahren erstellt er eine Rechenmaschine für die vier Grundrechenarten, die mittels Staffelwalzen betrieben wird. Sein wichtigster Beitrag für die moderne Informatik ist die Entdeckung des dualen Zahlensystems. Als Mathematiker beschäftigt er sich umfangreich mit Differenzial- und Integralrechnung. Zahlreiche Initiativen gehen auf ihn zurück, sodass er als großer Denker des 18. Jahrhunderts gilt.', 'NULL', 'm');
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `museum`.`quelle`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `museum`;
+INSERT INTO `museum`.`quelle` (`id`, `titel`, `isbn`, `link`, `typ`, `jahr`) VALUES (1, 'Ada und der Algorithmus', 'NULL', 'http://www.zeit.de/2014/05/ada-lovelace-programmie', 'Zeitschrift ', 2014);
+INSERT INTO `museum`.`quelle` (`id`, `titel`, `isbn`, `link`, `typ`, `jahr`) VALUES (2, 'Ada Lovelace Biography', 'NULL', 'http://www.biography.com/people/ada-lovelace-20825', 'Lexikon', 2015);
+INSERT INTO `museum`.`quelle` (`id`, `titel`, `isbn`, `link`, `typ`, `jahr`) VALUES (3, 'Ada Lovelace: Die Pionierin der Computertechnik un', '9783770559862', 'NULL', 'Buch', 2015);
+INSERT INTO `museum`.`quelle` (`id`, `titel`, `isbn`, `link`, `typ`, `jahr`) VALUES (4, 'Konrad Zuse: Der Vater des Computers', '3790003174', 'NULL', 'Buch', 2000);
+INSERT INTO `museum`.`quelle` (`id`, `titel`, `isbn`, `link`, `typ`, `jahr`) VALUES (5, 'Heinz Nixdorf: eine deutsche Karriere', '3478301203', 'NULL', 'Buch', 1986);
+INSERT INTO `museum`.`quelle` (`id`, `titel`, `isbn`, `link`, `typ`, `jahr`) VALUES (6, 'Grace Hopper', 'NULL', 'http://www.frauen-informatik-geschichte.de/index.p', 'Webseite', NULL);
+INSERT INTO `museum`.`quelle` (`id`, `titel`, `isbn`, `link`, `typ`, `jahr`) VALUES (7, 'Alan Turing: his Work and Impact', '9780123869807', 'NULL', 'Buch', 2013);
+INSERT INTO `museum`.`quelle` (`id`, `titel`, `isbn`, `link`, `typ`, `jahr`) VALUES (8, 'Gottfried Wilhelm Leibnis', '3406419550', 'NULL', 'Buch', 2000);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `museum`.`autor`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `museum`;
+INSERT INTO `museum`.`autor` (`id`, `vorname`, `nachname`) VALUES (1, ' Biography.com', ' Editors');
+INSERT INTO `museum`.`autor` (`id`, `vorname`, `nachname`) VALUES (2, ' Sybille', ' Krämer');
+INSERT INTO `museum`.`autor` (`id`, `vorname`, `nachname`) VALUES (3, ' Eberhard', ' Fennel');
+INSERT INTO `museum`.`autor` (`id`, `vorname`, `nachname`) VALUES (4, ' Horst-Dieter', ' Brähmig');
+INSERT INTO `museum`.`autor` (`id`, `vorname`, `nachname`) VALUES (5, ' Wilhelm', ' Mons');
+INSERT INTO `museum`.`autor` (`id`, `vorname`, `nachname`) VALUES (6, ' Horst', ' Zuse');
+INSERT INTO `museum`.`autor` (`id`, `vorname`, `nachname`) VALUES (7, ' Hermann', ' Flessner');
+INSERT INTO `museum`.`autor` (`id`, `vorname`, `nachname`) VALUES (8, ' Jürgen', ' Alex');
+INSERT INTO `museum`.`autor` (`id`, `vorname`, `nachname`) VALUES (9, ' Kurt', ' Pauli');
+INSERT INTO `museum`.`autor` (`id`, `vorname`, `nachname`) VALUES (10, ' Klaus', ' Kemper');
+INSERT INTO `museum`.`autor` (`id`, `vorname`, `nachname`) VALUES (11, ' Veronika', ' Oechtering');
+INSERT INTO `museum`.`autor` (`id`, `vorname`, `nachname`) VALUES (12, ' Barry', ' Cooper');
+INSERT INTO `museum`.`autor` (`id`, `vorname`, `nachname`) VALUES (13, ' Jan', ' van Leeuwen');
+INSERT INTO `museum`.`autor` (`id`, `vorname`, `nachname`) VALUES (14, ' Michael-Thomas', ' Liske');
+INSERT INTO `museum`.`autor` (`id`, `vorname`, `nachname`) VALUES (15, ' Anne', ' Kunze');
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `museum`.`kategorie`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `museum`;
+INSERT INTO `museum`.`kategorie` (`id`, `name`, `beschreibung`) VALUES (1, ' Mathematiker/in', '');
+INSERT INTO `museum`.`kategorie` (`id`, `name`, `beschreibung`) VALUES (2, ' Computerpionier/in', '');
+INSERT INTO `museum`.`kategorie` (`id`, `name`, `beschreibung`) VALUES (3, ' Ingenieur/in', '');
+INSERT INTO `museum`.`kategorie` (`id`, `name`, `beschreibung`) VALUES (4, ' Erfinder/in', '');
+INSERT INTO `museum`.`kategorie` (`id`, `name`, `beschreibung`) VALUES (5, ' Unternehmer/in', '');
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `museum`.`person_quelle`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `museum`;
+INSERT INTO `museum`.`person_quelle` (`id`, `person_id`, `quelle_id`) VALUES (1,  1,  1);
+INSERT INTO `museum`.`person_quelle` (`id`, `person_id`, `quelle_id`) VALUES (2,  1,  2);
+INSERT INTO `museum`.`person_quelle` (`id`, `person_id`, `quelle_id`) VALUES (3,  1,  3);
+INSERT INTO `museum`.`person_quelle` (`id`, `person_id`, `quelle_id`) VALUES (4,  2,  4);
+INSERT INTO `museum`.`person_quelle` (`id`, `person_id`, `quelle_id`) VALUES (5,  3,  5);
+INSERT INTO `museum`.`person_quelle` (`id`, `person_id`, `quelle_id`) VALUES (6,  4,  6);
+INSERT INTO `museum`.`person_quelle` (`id`, `person_id`, `quelle_id`) VALUES (7,  5,  7);
+INSERT INTO `museum`.`person_quelle` (`id`, `person_id`, `quelle_id`) VALUES (8,  6,  8);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `museum`.`quelle_autor`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `museum`;
+INSERT INTO `museum`.`quelle_autor` (`id`, `quelle_id`, `autor_id`) VALUES (1, 1, 15);
+INSERT INTO `museum`.`quelle_autor` (`id`, `quelle_id`, `autor_id`) VALUES (2, 2, 1);
+INSERT INTO `museum`.`quelle_autor` (`id`, `quelle_id`, `autor_id`) VALUES (3, 3, 2);
+INSERT INTO `museum`.`quelle_autor` (`id`, `quelle_id`, `autor_id`) VALUES (4, 4, 3);
+INSERT INTO `museum`.`quelle_autor` (`id`, `quelle_id`, `autor_id`) VALUES (5, 4, 4);
+INSERT INTO `museum`.`quelle_autor` (`id`, `quelle_id`, `autor_id`) VALUES (6, 4, 5);
+INSERT INTO `museum`.`quelle_autor` (`id`, `quelle_id`, `autor_id`) VALUES (7, 4, 6);
+INSERT INTO `museum`.`quelle_autor` (`id`, `quelle_id`, `autor_id`) VALUES (8, 4, 7);
+INSERT INTO `museum`.`quelle_autor` (`id`, `quelle_id`, `autor_id`) VALUES (9, 4, 8);
+INSERT INTO `museum`.`quelle_autor` (`id`, `quelle_id`, `autor_id`) VALUES (10, 4, 9);
+INSERT INTO `museum`.`quelle_autor` (`id`, `quelle_id`, `autor_id`) VALUES (11, 5, 10);
+INSERT INTO `museum`.`quelle_autor` (`id`, `quelle_id`, `autor_id`) VALUES (12, 6, 11);
+INSERT INTO `museum`.`quelle_autor` (`id`, `quelle_id`, `autor_id`) VALUES (13, 7, 12);
+INSERT INTO `museum`.`quelle_autor` (`id`, `quelle_id`, `autor_id`) VALUES (14, 7, 13);
+INSERT INTO `museum`.`quelle_autor` (`id`, `quelle_id`, `autor_id`) VALUES (15, 8, 14);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `museum`.`verlag`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `museum`;
+INSERT INTO `museum`.`verlag` (`id`, `name`) VALUES (1, 'DIE ZEIT');
+INSERT INTO `museum`.`verlag` (`id`, `name`) VALUES (2, 'A&E Televsion Networks');
+INSERT INTO `museum`.`verlag` (`id`, `name`) VALUES (3, 'Wilhelm Fink');
+INSERT INTO `museum`.`verlag` (`id`, `name`) VALUES (4, 'Parzeller');
+INSERT INTO `museum`.`verlag` (`id`, `name`) VALUES (5, 'Moderne Industrie');
+INSERT INTO `museum`.`verlag` (`id`, `name`) VALUES (6, 'Beck');
+INSERT INTO `museum`.`verlag` (`id`, `name`) VALUES (7, 'Elsevier');
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `museum`.`quelle_verlag`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `museum`;
+INSERT INTO `museum`.`quelle_verlag` (`id`, `quelle_id`, `verlag_id`) VALUES (1, 1, 1);
+INSERT INTO `museum`.`quelle_verlag` (`id`, `quelle_id`, `verlag_id`) VALUES (2, 2, 2);
+INSERT INTO `museum`.`quelle_verlag` (`id`, `quelle_id`, `verlag_id`) VALUES (3, 3, 3);
+INSERT INTO `museum`.`quelle_verlag` (`id`, `quelle_id`, `verlag_id`) VALUES (4, 4, 4);
+INSERT INTO `museum`.`quelle_verlag` (`id`, `quelle_id`, `verlag_id`) VALUES (5, 5, 5);
+INSERT INTO `museum`.`quelle_verlag` (`id`, `quelle_id`, `verlag_id`) VALUES (6, 7, 7);
+INSERT INTO `museum`.`quelle_verlag` (`id`, `quelle_id`, `verlag_id`) VALUES (7, 8, 6);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `museum`.`person_kategorie`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `museum`;
+INSERT INTO `museum`.`person_kategorie` (`id`, `person_id`, `kategorie_id`) VALUES (1,  1,  1);
+INSERT INTO `museum`.`person_kategorie` (`id`, `person_id`, `kategorie_id`) VALUES (2,  2,  2);
+INSERT INTO `museum`.`person_kategorie` (`id`, `person_id`, `kategorie_id`) VALUES (3,  2,  3);
+INSERT INTO `museum`.`person_kategorie` (`id`, `person_id`, `kategorie_id`) VALUES (4,  2,  4);
+INSERT INTO `museum`.`person_kategorie` (`id`, `person_id`, `kategorie_id`) VALUES (5,  2,  5);
+INSERT INTO `museum`.`person_kategorie` (`id`, `person_id`, `kategorie_id`) VALUES (6,  3,  5);
+INSERT INTO `museum`.`person_kategorie` (`id`, `person_id`, `kategorie_id`) VALUES (7,  4,  1);
+INSERT INTO `museum`.`person_kategorie` (`id`, `person_id`, `kategorie_id`) VALUES (8,  4,  2);
+INSERT INTO `museum`.`person_kategorie` (`id`, `person_id`, `kategorie_id`) VALUES (9,  5,  1);
+INSERT INTO `museum`.`person_kategorie` (`id`, `person_id`, `kategorie_id`) VALUES (10,  6,  1);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `museum`.`zitat`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `museum`;
+INSERT INTO `museum`.`zitat` (`id`, `text`, `quelle`, `link`, `jahr`, `seite`, `person_id`) VALUES (1, 'Die Maschine kann nur tun, was wir ihr zu befehlen wissen', 'NULL', 'http://www.bk-luebeck.eu/zitate-lovelace.html', NULL, 'NULL', 1);
+INSERT INTO `museum`.`zitat` (`id`, `text`, `quelle`, `link`, `jahr`, `seite`, `person_id`) VALUES (2, 'Die Gefahr, dass der Computer so wird wie der Mensch, ist nicht so groß wie die Gefahr, dass der Mensch so wird wie der Computer.', NULL, 'http://zitate.net/konrad-zuse-zitate', NULL, NULL, 2);
+INSERT INTO `museum`.`zitat` (`id`, `text`, `quelle`, `link`, `jahr`, `seite`, `person_id`) VALUES (3, 'Computer müssen so klein sein, dass sie in die linke untere Schublade eines Buchhalter-Schreibtisches passen.', NULL, 'https://de.wikipedia.org/wiki/Heinz_Nixdorf', NULL, NULL, 3);
+INSERT INTO `museum`.`zitat` (`id`, `text`, `quelle`, `link`, `jahr`, `seite`, `person_id`) VALUES (4, 'Wenn es eine gute Idee ist, dann mach es einfach. Es ist viel einfacher sich nachher zu entschuldigen als vorher die Genehmigung zu bekommen.', NULL, 'http://einstieg-informatik.de', NULL, NULL, 4);
+INSERT INTO `museum`.`zitat` (`id`, `text`, `quelle`, `link`, `jahr`, `seite`, `person_id`) VALUES (5, 'Wir können nur eine kurze Distanz in die Zukunft blicken, aber dort können wir eine Menge sehen, was getan werden muss.', 'Computing Machinery and Intelligence', NULL, 1950, NULL, 5);
+INSERT INTO `museum`.`zitat` (`id`, `text`, `quelle`, `link`, `jahr`, `seite`, `person_id`) VALUES (6, 'Beim Erwachen hatte ich schon so viele Einfälle, dass der Tag nicht ausreichte, um sie niederzuschreiben.', NULL, 'https://de.wikipedia.org/wiki/Gottfried_Wilhelm_Le', NULL, NULL, 6);
+
+COMMIT;
+
+
+
+
+-- -----------------------------------------------------
+-- Data for table `museum`.`person_bilder`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `museum`;
+
+INSERT INTO `museum`.`person_bilder`(`id`, `person_id`, `bilder_id`) VALUES ('1', '1', '1');
+INSERT INTO `museum`.`person_bilder`(`id`, `person_id`, `bilder_id`) VALUES ('2', '1', '2');
+INSERT INTO `museum`.`person_bilder`(`id`, `person_id`, `bilder_id`) VALUES ('3', '2', '3');
+INSERT INTO `museum`.`person_bilder`(`id`, `person_id`, `bilder_id`) VALUES ('4', '2', '4');
+INSERT INTO `museum`.`person_bilder`(`id`, `person_id`, `bilder_id`) VALUES ('5', '3', '5');
+INSERT INTO `museum`.`person_bilder`(`id`, `person_id`, `bilder_id`) VALUES ('6', '3', '6');
+INSERT INTO `museum`.`person_bilder`(`id`, `person_id`, `bilder_id`) VALUES ('7', '4', '7');
+INSERT INTO `museum`.`person_bilder`(`id`, `person_id`, `bilder_id`) VALUES ('8', '4', '8');
+INSERT INTO `museum`.`person_bilder`(`id`, `person_id`, `bilder_id`) VALUES ('9', '5', '9');
+INSERT INTO `museum`.`person_bilder`(`id`, `person_id`, `bilder_id`) VALUES ('10', '6', '10');
+
+COMMIT;
+
+
+
+-- -----------------------------------------------------
+-- Data for table `museum`.`bilder`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `museum`;
+
+INSERT INTO `museum`.`bilder`(`id`, `pfad`, `beschreibung`, `link`) VALUES ('1', 'lovelace-1.jpg', 'Ada Lovelace 1836: Gemälde von Margaret Sarah Carpenter (Wikipedia)', 'https://de.wikipedia.org/wiki/Ada_Lovelace');
+INSERT INTO `museum`.`bilder`(`id`, `pfad`, `beschreibung`, `link`) VALUES ('2', 'lovelace-2.jpg', '', 'http://www.biography.com/people/ada-lovelace-20825323');
+INSERT INTO `museum`.`bilder`(`id`, `pfad`, `beschreibung`, `link`) VALUES ('3', 'zuse-1.jpg', ' Konrad Zuse, 1992 (Wikipedia)', 'https://de.wikipedia.org/wiki/Konrad_Zuse');
+INSERT INTO `museum`.`bilder`(`id`, `pfad`, `beschreibung`, `link`) VALUES ('4', 'zuse-2.jpg', 'Konrad Zuse (Archiv des Deutschen Museums)', 'http://www.deutsches-museum.de/archiv/projekte/');
+INSERT INTO `museum`.`bilder`(`id`, `pfad`, `beschreibung`, `link`) VALUES ('5', 'nixdorf-1.jpg', ' Heinz Nixdorf (Wikipedia)', 'https://de.wikipedia.org/wiki/Heinz_Nixdorf');
+INSERT INTO `museum`.`bilder`(`id`, `pfad`, `beschreibung`, `link`) VALUES ('6', 'nixdorf-2.jpg', ' Heinz Nixdorf (Wikipedia)', 'https://de.wikipedia.org/wiki/Heinz_Nixdorf');
+INSERT INTO `museum`.`bilder`(`id`, `pfad`, `beschreibung`, `link`) VALUES ('7', 'hopper-1.jpg', ' Grace Hopper, 1960 (Wikipedia)', 'https://de.wikipedia.org/wiki/Grace_Hopper');
+INSERT INTO `museum`.`bilder`(`id`, `pfad`, `beschreibung`, `link`) VALUES ('8', 'hopper-2.jpg', ' Grace Hopper, 1984 (Wikipedia)', 'https://de.wikipedia.org/wiki/Grace_Hopper');
+INSERT INTO `museum`.`bilder`(`id`, `pfad`, `beschreibung`, `link`) VALUES ('9', 'turing-1.jpg', ' Alan Turing, 1927 (Wikipedia)', 'https://de.wikipedia.org/wiki/Alan_Turing');
+INSERT INTO `museum`.`bilder`(`id`, `pfad`, `beschreibung`, `link`) VALUES ('10', 'leibniz-1.jpg', 'Gottfried Wilhelm Leibniz (Fokus Online)', 'http://www.focus.de/wissen/mensch/naturwissenschaften/mathematik/tid-8279/geschichte_aid_229017.html');
+
+COMMIT;
