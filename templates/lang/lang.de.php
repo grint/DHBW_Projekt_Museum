@@ -23,6 +23,7 @@ const RETURN_TO_HOME = "Zurück zur Startseite";
 const MENU_ABOUT = "Über das Museum";
 const MENU_ALL_PERSONS = ALL_COMPUTER_SCIENTIST;
 
+
 //  Home page
 
 const HOME_HEADER_TITLE = SITE_NAME;
