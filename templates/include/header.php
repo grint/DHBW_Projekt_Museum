@@ -52,7 +52,7 @@
                         <a href="#page-top"></a>
                     </li>
                     <li class="page-scroll">
-                        <a href="./?action=allPersons">Alle Informatiker</a>
+                        <a href="./?action=allPersons">Alle Informatiker/Innen</a>
                     </li>
                     <li class="page-scroll">
                         <a href="#about">Über das Museum</a>

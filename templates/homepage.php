@@ -55,11 +55,11 @@
         </div>
         <div class="row">
             <div class="col-lg-4 col-lg-offset-2">
-                <p>Entdecken Sie in im virtuellen Museum die größten Informatiker und Informatikerinnen aller Zeiten. Hier erfahren Sie welche bahnbrechenden Erfindungen in Geschichte und Gegenwart das Computerzeitalter geprägt haben. 
+                <p>Entdecken Sie im virtuellen Museum die größten Informatiker und Informatikerinnen aller Zeiten. Hier erfahren Sie welche bahnbrechenden Erfindungen in Geschichte und Gegenwart das Computerzeitalter geprägt haben. 
                 </p>
             </div>
             <div class="col-lg-4">
-                <p>In dieser Online Bibliothek erhalten Sie kostenlose biographische Angaben. Das virtuelle Museum ist ein Projekt der DHBW Stuttgart in Kooperation mit den Studierenden der Angewandten Informatik.</p>
+                <p>In dieser Online Bibliothek erhalten Sie biographische Angaben. Das virtuelle Museum ist ein Projekt der DHBW Stuttgart in Kooperation mit den Studierenden der Angewandten Informatik.</p>
             </div>
             <div class="col-lg-8 col-lg-offset-2 text-center">
                 <a href="./?action=allPersons" class="btn btn-lg btn-outline">
