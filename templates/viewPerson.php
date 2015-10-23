@@ -20,8 +20,8 @@
         <div class="row">
             <div class="col-lg-12">
                 <p>Titel: <?php echo $results['person']->titel ?></p>
-                <p>geboren am <?php echo date('j F Y', strtotime($results['person']->geburtsdatum)) ?> in <?php echo $results['person']->geburtsort ?></p>
-                <p>gestorben am <?php echo date('j F Y', strtotime($results['person']->todesdatum)) ?> in <?php echo $results['person']->todesort ?></p>
+                <p>geboren am <?php echo DateTime::createFromFormat("Y-m-d", $results['person']->geburtsdatum)->format('j F Y') ?> in <?php echo $results['person']->geburtsort ?></p>
+                <p>gestorben am <?php echo DateTime::createFromFormat("Y-m-d", $results['person']->todesdatum)->format('j F Y') ?> in <?php echo $results['person']->todesort ?></p>
 				<p><?php echo htmlspecialchars( $results['person']->k_beschreibung )?></p>
 				<p><?php echo $results['person']->l_beschreibung?></p>
                
