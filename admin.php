@@ -46,24 +46,24 @@ function login() {
 
   if ( isset( $_POST['login'] ) ) {
 
-    // Пользователь получает форму входа: попытка авторизировать пользователя
+    // The user receives a login form: an attempt to authenticate the user
 
     if ( $_POST['username'] == ADMIN_USERNAME && $_POST['password'] == ADMIN_PASSWORD ) {
 
-      // Вход прошел успешно: создаем сессию и перенаправляем на страницу администратора
+      // Login was successful: create a session and redirect to the administrator page
       $_SESSION['username'] = ADMIN_USERNAME;
       header( "Location: admin.php" );
 
     } else {
 
-      // Ошибка входа: выводим сообщение об ошибке для пользователя
+      // Login failed: print an error message to the user
       $results['errorMessage'] = "Incorrect username or password. Please try again.";
       require( TEMPLATE_PATH . "/admin/loginForm.php" );
     }
 
   } else {
 
-    // Пользователь еще не получил форму: выводим форму
+    // This user has not yet received the form: withdrawal form
     require( TEMPLATE_PATH . "/admin/loginForm.php" );
   }
 
@@ -84,7 +84,7 @@ function newPerson() {
 
   if ( isset( $_POST['saveChanges'] ) ) {
 
-    // Пользователь получает форму редактирования статьи: сохраняем новую статью
+    // The user receives the editing form: save a new person
     $person = new Person;
     $person->storeFormValues( $_POST );
     $person->insert();
@@ -92,11 +92,11 @@ function newPerson() {
 
   } elseif ( isset( $_POST['cancel'] ) ) {
 
-    // Пользователь сбросид результаты редактирования: возвращаемся к списку статей
+    // Resetting the results of editing: back to the list of persons
     header( "Location: admin.php" );
   } else {
 
-    // Пользователь еще не получил форму редактирования: выводим форму
+    // This user has not yet received the edit form: withdrawal form
     $results['person'] = new Person;
     require( TEMPLATE_PATH . "/admin/editPerson.php" );
   }
@@ -112,7 +112,7 @@ function editPerson() {
 
   if ( isset( $_POST['saveChanges'] ) ) {
 
-    // Пользователь получил форму редактирования статьи: сохраняем изменения
+    // The user received the edit form of the person: save changes
 
     if ( !$person = Person::getById( (int)$_POST['personId'] ) ) {
       header( "Location: admin.php?error=personNotFound" );
@@ -125,11 +125,11 @@ function editPerson() {
 
   } elseif ( isset( $_POST['cancel'] ) ) {
 
-    // Пользователь отказался от результатов редактирования: возвращаемся к списку статей
+    // User refused the edit results: return to the list of persons
     header( "Location: admin.php" );
   } else {
 
-    // Пользвоатель еще не получил форму редактирования: выводим форму
+    // This user has not yet received the edit form: withdrawal form
     $results['person'] = Person::getById( (int)$_GET['personId'] );
     require( TEMPLATE_PATH . "/admin/editPerson.php" );
   }

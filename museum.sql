@@ -97,7 +97,7 @@ CREATE TABLE IF NOT EXISTS `museum`.`person` (
   `todesort` VARCHAR(50) NULL,
   `k_beschreibung` VARCHAR(1000) NULL,
   `l_beschreibung` VARCHAR(10000) NULL,
-  `titel` SET('Prof.', 'Dr.') NULL,
+  `titel` SET('Prof.', 'Dr.', 'Dipl.-Ing.', 'Prof.-Ing.', 'Dipl.-Inf.', 'Dipl.-Math.') NULL,
   `geschlecht` SET('f', 'm') NOT NULL,
   PRIMARY KEY (`id`) ,
   INDEX `informatiker_nachname_idx` (`nachname` ASC) )

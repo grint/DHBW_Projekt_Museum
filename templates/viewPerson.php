@@ -6,7 +6,15 @@
             <div class="col-lg-12 text-center">
                 <h2><?php echo $results['person']->vorname .' '. $results['person']->nachname ?></h2>
                 <hr class="star-primary">
-                <img src="<?php echo 'img/persons/'.$results['person']->bild_pfad ?>" class="img-responsive img-centered" alt=""/>
+                <div class="row">
+                    <?php 
+                    $images_urls = explode(",", $results['person']->bild_pfad);
+                    for ($i = 0; $i < sizeof($images_urls); $i++) { ?>
+                        <a href="img/persons/<?php echo $images_urls[$i] ?>" class="fancybox" rel="gallery">
+                            <img src="<?php echo Person::cropImage('img/persons', $images_urls[$i], 360, 260); ?>" class="img-bordered img-thumbnail img-centered" alt=""/>
+                        </a>
+                    <?php } ?>
+                </div>
             </div>
         </div>
         <div class="row">

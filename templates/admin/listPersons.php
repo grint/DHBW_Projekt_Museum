@@ -21,7 +21,7 @@
 
 
           <?php if ( isset( $results['statusMessage'] ) ) { ?>
-              <div class="statusMessage"><?php echo $results['statusMessage'] ?></div>
+              <div class="alert alert-info text-center statusMessage"><?php echo $results['statusMessage'] ?></div>
           <?php } ?>
 
           <table class="table table-bordered table-striped table-hover margin-top">

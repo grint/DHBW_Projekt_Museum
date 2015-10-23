@@ -14,6 +14,11 @@
     <!-- Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
+    <!-- Plugins CSS -->
+    <link href="css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css">
+    <link href="css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css">
+    <link href="js/fancybox/jquery.fancybox.css" rel="stylesheet" type="text/css">
+
     <!-- Custom CSS -->
     <link href="css/style.css" rel="stylesheet">
 

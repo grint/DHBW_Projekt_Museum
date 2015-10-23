@@ -478,3 +478,18 @@ footer .footer-below {
     display: none;
     opacity: 0;
 }
+
+
+
+
+/* Custom CSS */
+
+.form-group.required input[type=text] {
+    border-top-color: #1DCA4E;
+}
+
+.alert-info {
+    background-color: #E6F5FF;
+    border-color: #C3D7E4;
+    color: #333;
+}

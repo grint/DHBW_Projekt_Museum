@@ -69,6 +69,9 @@
     <script src="js/jquery.easing.min.js"></script>
     <script src="js/classie.js"></script>
     <script src="js/cbpAnimatedHeader.js"></script>
+    <script src="js/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+    <script src="js/autosize.min.js"></script>
+    <script src="js/fancybox/jquery.fancybox.pack.js"></script>
 
     <!-- Custom JavaScript -->
     <script src="js/script.js"></script>
