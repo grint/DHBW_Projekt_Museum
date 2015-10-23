@@ -25,6 +25,9 @@ class Person
   public $deleted_images_ids = null;
   public $deleted_images_urls = null;
 
+  public $kategorie_id = null;
+  public $kategorie_name = null;
+
 
   /**
   * Set the properties using the values in the specified array
@@ -45,6 +48,9 @@ class Person
     if ( isset( $data['l_beschreibung'] ) )     $this->l_beschreibung = $data['l_beschreibung'];
     if ( isset( $data['titel'] ) )              $this->titel = $data['titel'];
     if ( isset( $data['geschlecht'] ) )         $this->geschlecht = $data['geschlecht'];
+
+    if ( isset( $data['kategorie_id'] ) )         $this->kategorie_id = $data['kategorie_id'];
+    if ( isset( $data['kategorie_name'] ) )         $this->kategorie_name = $data['kategorie_name'];
 
     if ( isset( $data['bild_id'] ) )            $this->bild_id = $data['bild_id'];
     if ( isset( $data['bild_pfad'] ) )          $this->bild_pfad = $data['bild_pfad'];
@@ -138,12 +144,17 @@ class Person
     $sql = "SELECT SQL_CALC_FOUND_ROWS PERSON.*, 
               BILDER.pfad AS bild_pfad, 
               BILDER.beschreibung AS bild_beschreibung,
-              BILDER.link AS bild_link
+              BILDER.link AS bild_link,
+              KATEGORIE.name AS kategorie_name
             FROM person PERSON
               LEFT JOIN person_bilder PB
                 ON PERSON.id = PB.person_id
               LEFT JOIN bilder BILDER
                 ON BILDER.id = PB.bilder_id
+              LEFT JOIN person_kategorie PK
+                ON PERSON.id = PK.person_id
+              LEFT JOIN kategorie KATEGORIE
+                ON KATEGORIE.id = PK.kategorie_id
             GROUP BY PERSON.id
             ORDER BY " . mysql_escape_string($order) . " LIMIT :startFrom, :numRows";
 
