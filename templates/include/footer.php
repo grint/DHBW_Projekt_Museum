@@ -4,11 +4,11 @@
             <div class="container">
                 <div class="row">
                     <div class="footer-col col-md-4">
-                        <h3>Standort</h3>
+                        <h3><?php echo ADDRESS ?></h3>
                         <p>DHBW Stuttgart<br>Rotebühlplatz 41<br>70173 Stuttgart</p>
                     </div>
                     <div class="footer-col col-md-4">
-                        <h3>Im Web</h3>
+                        <h3><?php echo IN_WEB ?></h3>
                         <ul class="list-inline">
                             <li>
                                 <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-facebook"></i></a>
@@ -19,17 +19,11 @@
                             <li>
                                 <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-twitter"></i></a>
                             </li>
-                            <li>
-                                <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-linkedin"></i></a>
-                            </li>
-                            <li>
-                                <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-dribbble"></i></a>
-                            </li>
                         </ul>
                     </div>
                     <div class="footer-col col-md-4">
-                        <h3>ÜBER DAS MUSEUM</h3>
-                        <p>In dieser Online Bibliothek erhalten Sie biographische Angaben über die größten Informatiker und Informatikerinnen aller Zeiten.</p>
+                        <h3><?php echo FOOTER_ABOUT ?></h3>
+                        <p><?php echo ABOUT_TEXT_3 ?></p>
                     </div>
                 </div>
             </div>
@@ -40,9 +34,11 @@
                     <div class="col-lg-6 text-left">
                         Copyright &copy; Virtuelles Museum 2015
                     </div>
-                    <div class="col-lg-6 text-right">
-                        <a href="./admin.php">Admin</a>
-                    </div>
+                    <?php if($_SESSION) {?>
+                        <div class="col-lg-6 text-right">
+                            <a href="./admin.php">Admin</a>
+                        </div>
+                    <?php } ?>
                 </div>
             </div>
         </div>
@@ -70,6 +66,7 @@
     <script src="js/classie.js"></script>
     <script src="js/cbpAnimatedHeader.js"></script>
     <script src="js/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+    <script src="js/bootstrap-datepicker/locales/bootstrap-datepicker.de.min.js"></script>
     <script src="js/autosize.min.js"></script>
     <script src="js/fancybox/jquery.fancybox.pack.js"></script>
 

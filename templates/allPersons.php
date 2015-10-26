@@ -4,34 +4,35 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12 text-center">
-                <h2>Alle Informatiker</h2>
+                <h2><?php echo ALL_COMPUTER_SCIENTIST ?></h2>
                 <hr class="star-primary">
             </div>
         </div>
 
         <div class="row">
-            <div class="col-lg-12">
 
-              <?php if (isset($_GET["page"])) { $page  = $_GET["page"]; } else { $page = 1; }; ?>
-              <nav>
-                <ul class="pagination">
-                  <li>
-                    <a href="<?php echo '.?action=allPersons&page=1' ?>">
-                      <span aria-hidden="true">&laquo;</span>
+          <?php if (isset($_GET["category"])) { $category  = $_GET["category"]; } else { $category = ''; }; ?>
+          <div class="col-xs-12 col-sm-3">
+            <ul class="list-group">
+              <li class="list-group-item">
+                <h4 class="list-group-item-heading"><?php echo CATEGORIES ?></h4>
+              </li>
+              <li class="list-group-item <?php if($category == '') { echo 'active'; } ?>">
+                <a href=".?action=allPersons"><?php echo ALL ?></a>
+              </li>
+            <?php foreach(Person::getFields("kategorie", 'id, name') as $cat) { ?>
+                  <li class="list-group-item <?php if($category == $cat['id']) { echo 'active'; } ?>">
+                    <a href=".?action=allPersons&category=<?php echo $cat['id'] ?>">
+                      <?php echo $cat['name'] ?>
                     </a>
                   </li>
-                  <?php for ($i = 1; $i <= $results['totalPages']; $i++) { ?>
-                    <li class="<?php if($page == $i) { echo 'active'; } ?>">
-                      <a href="<?php echo '.?action=allPersons&page=' . $i ?>"><?php echo $i; ?></a>
-                    </li>
-                  <?php } ?> 
-                  <li>
-                    <a href="<?php echo '.?action=allPersons&page='. $results['totalPages'] ?>">
-                      <span aria-hidden="true">&raquo;</span>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
+            <?php } ?>
+            </ul>
+          </div>
+
+
+
+            <div class="col-xs-12 col-sm-9">
 
               <?php foreach ( $results['persons'] as $person ) { ?>
                 <div class="media">
@@ -51,16 +52,36 @@
                 </div>
               <?php } ?>
 
-              
-              <hr class="star-primary">
+
+              <?php if (isset($_GET["page"])) { $page  = $_GET["page"]; } else { $page = 1; }; ?>
+              <nav class='text-right'>
+                <ul class="pagination">
+                  <li>
+                    <a href="<?php echo '.?action=allPersons&page=1' ?>">
+                      <span aria-hidden="true">&laquo;</span>
+                    </a>
+                  </li>
+                  <?php for ($i = 1; $i <= $results['totalPages']; $i++) { ?>
+                    <li class="<?php if($page == $i) { echo 'active'; } ?>">
+                      <a href="<?php echo '.?action=allPersons&page=' . $i ?>"><?php echo $i; ?></a>
+                    </li>
+                  <?php } ?> 
+                  <li>
+                    <a href="<?php echo '.?action=allPersons&page='. $results['totalPages'] ?>">
+                      <span aria-hidden="true">&raquo;</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+
             </div>
         </div>
         <div class="row margin-top">
             <div class="col-sm-6">
-              <p><?php echo $results['totalRows']?> person<?php echo ( $results['totalRows'] != 1 ) ? 's' : '' ?> in total.</p>
+              <p><?php echo $results['totalRows']?> <?php echo ( $results['totalRows'] > 1 ) ? PERSONS : PERSON ?> <?php echo IN_TOTAL ?>.</p>
             </div>
             <div class="col-sm-6 text-right">
-              <p><a href="./">Return to Homepage</a></p>
+              <p><a href="./"><?php echo RETURN_TO_HOME ?></a></p>
             </div>
         </div>
       </div>

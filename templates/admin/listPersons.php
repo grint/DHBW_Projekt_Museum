@@ -7,13 +7,13 @@
           <div class="col-lg-12 text-center">
               <h2>Admin</h2>
               <hr class="star-primary">
-              <p>You are logged in as <b><?php echo htmlspecialchars( $_SESSION['username']) ?></b>. <a href="admin.php?action=logout"?>Log out</a></p>
+              <p><?php echo LOGGED_1 ?> <b><?php echo htmlspecialchars( $_SESSION['admin_name']) ?></b><?php echo LOGGED_2 ?>. <a href="admin.php?action=logout"?><?php echo LOGOUT ?></a></p>
           </div>
       </div>
 
       <div class="row">
         <div class="col-lg-10 col-md-12 col-lg-offset-1">
-          <h1 class="text-center">Alle Informatiker</h1>
+          <h1 class="text-center"><?php echo $results['pageTitle'] ?></h1>
 
           <?php if ( isset( $results['errorMessage'] ) ) { ?>
             <div class="errorMessage"><?php echo $results['errorMessage'] ?></div>
@@ -50,10 +50,10 @@
 
     <div class="row">
       <div class="col-lg-5 col-md-6 col-lg-offset-1">
-        <p><?php echo $results['totalRows']?> person<?php echo ( $results['totalRows'] != 1 ) ? 's' : '' ?> in total.</p>
+      <p><?php echo $results['totalRows']?> <?php echo ( $results['totalRows'] > 1 ) ? PERSONS : PERSON ?> <?php echo IN_TOTAL ?>.</p>
       </div>
       <div class="col-lg-5 col-md-6 text-right">
-        <a href="admin.php?action=newPerson" class="btn btn-primary">Add a New Person</a>
+        <a href="admin.php?action=newPerson" class="btn btn-primary"><?php echo ADD_NEW_PERSON ?></a>
       </div>
     </div>
 </section>

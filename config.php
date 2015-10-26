@@ -1,12 +1,14 @@
 <?php
 ini_set( "display_errors", true );
 define( "DB_DSN", "mysql:host=localhost;dbname=museum;charset=utf8" );
-define( "DB_USERNAME", "admin" );
-define( "DB_PASSWORD", "admin" );
+define( "DB_USERNAME", "it" );
+define( "DB_PASSWORD", "nekane27" );
 define( "CLASS_PATH", "classes" );
 define( "TEMPLATE_PATH", "templates" );
 define( "HOMEPAGE_NUM_PERSONS", 6 );
-define( "PERSONS_PER_PAGE", 3 );
+define( "PERSONS_PER_PAGE", 6 );
+define( "USER_USERNAME", "user" );
+define( "USER_PASSWORD", "user" );
 define( "ADMIN_USERNAME", "einhorn" );
 define( "ADMIN_PASSWORD", "1a2s3d4f" );
 define( "VALID_IMAGES", serialize (array("jpeg","jpg","png","gif")) );

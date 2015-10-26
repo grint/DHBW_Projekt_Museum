@@ -51,19 +51,21 @@
                 <a class="navbar-brand" href="/">Virtuelles Museum</a>
             </div>
 
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="hidden">
-                        <a href="#page-top"></a>
-                    </li>
-                    <li class="page-scroll">
-                        <a href="./?action=allPersons">Alle Informatiker/Innen</a>
-                    </li>
-                    <li class="page-scroll">
-                        <a href="#about">Über das Museum</a>
-                    </li>
-                </ul>
-            </div>
+            <?php if($_SESSION) {?>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="hidden">
+                            <a href="#page-top"></a>
+                        </li>
+                        <li>
+                            <a href="./?action=allPersons">Alle Informatiker/Innen</a>
+                        </li>
+                        <li class="page-scroll">
+                            <a href="/#about">Über das Museum</a>
+                        </li>
+                    </ul>
+                </div>
+            <?php } ?>
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container-fluid -->

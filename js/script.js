@@ -3,7 +3,7 @@ $(function() {
     $('body').on('click', '.page-scroll a', function(event) {
         var $anchor = $(this);
         $('html, body').stop().animate({
-            scrollTop: $($anchor.attr('href')).offset().top -100
+            scrollTop: $($anchor.attr('href').replace("/", "")).offset().top -100
         }, 1500, 'easeInOutExpo');
         event.preventDefault();
     });
@@ -16,6 +16,7 @@ $(function() {
     // init datepicker plugin
     $('.datepicker').datepicker({
         format: 'yyyy-mm-dd',
+        language: 'de-DE'
     })
 
     // init textarea autosize plugin

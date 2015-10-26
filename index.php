@@ -2,7 +2,9 @@
 
 require( "config.php" );
 session_start();
-// require( TEMPLATE_PATH . "/lang/language.php" );
+$action = isset( $_GET['action'] ) ? $_GET['action'] : "";
+$user_name = isset( $_SESSION['user_name'] ) ? $_SESSION['user_name'] : "";
+$admin_name = isset( $_SESSION['admin_name'] ) ? $_SESSION['admin_name'] : "";
 
 if(isSet($_GET['lang'])) {
   $GLOBALS['lang'] = $_GET['lang'];
@@ -22,10 +24,20 @@ else {
  
 require( TEMPLATE_PATH . '/lang/lang.'.$GLOBALS['lang'].'.php' );
 
+if ( $action != "login" && $action != "logout" && !$user_name  && !$admin_name ) {
+  login();
+  exit;
+}
 
 $action = isset( $_GET['action'] ) ? $_GET['action'] : "";
 
 switch ( $action ) {
+  case 'login':
+    login();
+    break;
+  case 'logout':
+    logout();
+    break;
   case 'allPersons':
     allPersons();
     break;
@@ -39,16 +51,61 @@ switch ( $action ) {
     homepage();
 }
 
+function login() {
+  $results = array();
+  $results['pageTitle'] = "User Login";
+  $results['formAction'] = "index.php?action=login";
+  $results['sessionType'] = "user";
+
+  if ( isset( $_POST['login'] ) ) {
+
+    // The user receives a login form: an attempt to authenticate the user
+    if ( $_POST['user_name'] == USER_USERNAME && $_POST['user_password'] == USER_PASSWORD ) {
+      // Login as user was successful: create a session and redirect to the main page
+      $_SESSION['user_name'] = USER_USERNAME;
+      header( "Location: index.php" );
+
+    } else if ( $_POST['user_name'] == ADMIN_USERNAME && $_POST['user_password'] == ADMIN_PASSWORD ) {
+      // Login as admin was successful: create a session and redirect to the main page
+      $_SESSION['user_name'] = USER_USERNAME;
+      $_SESSION['user_name'] = ADMIN_USERNAME;
+      header( "Location: index.php" );
+
+    } else {
+      // Login failed: print an error message to the user
+      $results['errorMessage'] = WRONG_LOGIN;
+      require( TEMPLATE_PATH . "/admin/loginForm.php" );
+    }
+
+  } else {
+    // This user has not yet received the form: withdrawal form
+    require( TEMPLATE_PATH . "/admin/loginForm.php" );
+  }
+}
+
+
+function logout() {
+  unset( $_SESSION['user_name'] );
+  unset( $_SESSION['admin_name'] );
+  header( "Location: index.php" );
+}
+
 function allPersons() {
   $results = array();
+
   if (isset($_GET["page"])) { 
     $page  = $_GET["page"]; 
     $start_from = ($page - 1) * PERSONS_PER_PAGE; 
     $data = Person::getList($start_from, PERSONS_PER_PAGE);
   } 
+  else if (isset($_GET["category"])) { 
+    $category  = $_GET["category"]; 
+    $data = Person::getList(0, PERSONS_PER_PAGE, $category);
+  } 
   else { 
     $data = Person::getList(0, PERSONS_PER_PAGE);
   };
+
 
   $results['persons'] = $data['results'];
   $results['totalRows'] = $data['totalRows'];
