@@ -13,7 +13,7 @@
         <div class="row">
           <div class="col-lg-6 col-md-8 col-sm-12 col-lg-offset-3 col-md-offset-2">
 
-            <form action="<?php echo $results['formAction']?>" method="post" class="form-horizontal">
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" class="form-horizontal">
               <input type="hidden" name="login" value="true" />
 
               <?php if ( isset( $results['errorMessage'] ) ) { ?>

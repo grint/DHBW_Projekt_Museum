@@ -1,0 +1,2 @@
+"2015-10-27 00:36:38",ERROR,--,"SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '/ LEFT JOIN ( // SELECT // person.id as P' at line 13",22,/home/hamster/WWW/dhbw-museum/config.php
+"2015-10-27 00:38:34",ERROR,--,"SQLSTATE[42S22]: Column not found: 1054 Unknown column 'KATEGORIE.id' in 'field list'",22,/home/hamster/WWW/dhbw-museum/config.php

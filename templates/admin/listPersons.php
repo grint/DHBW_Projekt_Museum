@@ -7,7 +7,7 @@
           <div class="col-lg-12 text-center">
               <h2>Admin</h2>
               <hr class="star-primary">
-              <p><?php echo LOGGED_1 ?> <b><?php echo htmlspecialchars( $_SESSION['admin_name']) ?></b><?php echo LOGGED_2 ?>. <a href="admin.php?action=logout"?><?php echo LOGOUT ?></a></p>
+              <p><?php echo LOGGED_1 ?> <b><?php echo htmlspecialchars( $_SESSION['admin_name']) ?></b><?php echo LOGGED_2 ?>. <a href="/admin/logout"?><?php echo LOGOUT ?></a></p>
           </div>
       </div>
 
@@ -35,7 +35,7 @@
             <tbody>
               <?php foreach ( $results['persons'] as $person ) { ?>
 
-                <tr onclick="location='admin.php?action=editPerson&amp;personId=<?php echo $person->id?>'">
+                <tr onclick="location='/admin/editPerson/<?php echo $person->id?>'">
                   <td><?php echo $person->vorname ?></td>
                   <td><?php echo $person->nachname ?></td>
                   <td><?php echo date('j M Y', strtotime($person->geburtsdatum))?></td>
@@ -53,7 +53,7 @@
       <p><?php echo $results['totalRows']?> <?php echo ( $results['totalRows'] > 1 ) ? PERSONS : PERSON ?> <?php echo IN_TOTAL ?>.</p>
       </div>
       <div class="col-lg-5 col-md-6 text-right">
-        <a href="admin.php?action=newPerson" class="btn btn-primary"><?php echo ADD_NEW_PERSON ?></a>
+        <a href="/admin/newPerson" class="btn btn-primary"><?php echo ADD_NEW_PERSON ?></a>
       </div>
     </div>
 </section>

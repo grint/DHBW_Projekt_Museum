@@ -36,7 +36,7 @@
                     </div>
                     <?php if($_SESSION) {?>
                         <div class="col-lg-6 text-right">
-                            <a href="./admin.php">Admin</a>
+                            <a href="/admin">Admin</a>
                         </div>
                     <?php } ?>
                 </div>
@@ -56,22 +56,22 @@
 
 
     <!-- jQuery -->
-    <script src="js/jquery-2.1.4.min.js"></script>
+    <script src="/js/jquery-2.1.4.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
 
     <!-- Plugins -->
-    <script src="js/jquery.easing.min.js"></script>
-    <script src="js/classie.js"></script>
-    <script src="js/cbpAnimatedHeader.js"></script>
-    <script src="js/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
-    <script src="js/bootstrap-datepicker/locales/bootstrap-datepicker.de.min.js"></script>
-    <script src="js/autosize.min.js"></script>
-    <script src="js/fancybox/jquery.fancybox.pack.js"></script>
+    <script src="/js/jquery.easing.min.js"></script>
+    <script src="/js/classie.js"></script>
+    <script src="/js/cbpAnimatedHeader.js"></script>
+    <script src="/js/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+    <script src="/js/bootstrap-datepicker/locales/bootstrap-datepicker.de.min.js"></script>
+    <script src="/js/autosize.min.js"></script>
+    <script src="/js/fancybox/jquery.fancybox.pack.js"></script>
 
     <!-- Custom JavaScript -->
-    <script src="js/script.js"></script>
+    <script src="/js/script.js"></script>
 
 </body>
 

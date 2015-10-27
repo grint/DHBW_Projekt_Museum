@@ -62,7 +62,7 @@ function login() {
 
   $results = array();
   $results['pageTitle'] = "Admin Login";
-  $results['formAction'] = "admin.php?action=login";
+  $results['formAction'] = "/admin/login";
   $results['sessionType'] = "admin";
 
   if ( isset( $_POST['login'] ) ) {
@@ -109,12 +109,12 @@ function newPerson() {
     $person = new Person;
     $person->storeFormValues( $_POST );
     $person->insert();
-    header( "Location: admin.php?status=changesSaved" );
+    header( "Location: /admin/changesSaved" );
 
   } elseif ( isset( $_POST['cancel'] ) ) {
 
     // Resetting the results of editing: back to the list of persons
-    header( "Location: admin.php" );
+    header( "Location: /admin/" );
   } else {
 
     // This user has not yet received the edit form: withdrawal form
@@ -136,13 +136,13 @@ function editPerson() {
     // The user received the edit form of the person: save changes
 
     if ( !$person = Person::getById( (int)$_POST['personId'] ) ) {
-      header( "Location: admin.php?error=personNotFound" );
+      header( "Location: /admin/personNotFound" );
       return;
     }
 
     $person->storeFormValues( $_POST );
     $person->update();
-    header( "Location: admin.php?status=changesSaved" );
+    header( "Location: /admin/changesSaved" );
 
   } elseif ( isset( $_POST['cancel'] ) ) {
 
@@ -161,12 +161,12 @@ function editPerson() {
 function deletePerson() {
 
   if ( !$person = Person::getById( (int)$_GET['personId'] ) ) {
-    header( "Location: admin.php?error=personNotFound" );
+    header( "Location: /admin.php/personNotFound" );
     return;
   }
 
   $person->delete();
-  header( "Location: admin.php?status=personDeleted" );
+  header( "Location: /admin/personDeleted" );
 }
 
 

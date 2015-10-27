@@ -9,21 +9,21 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Virtuelles Museum</title>
+    <title><?php echo SITE_NAME; ?></title>
 
     <!-- Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Plugins CSS -->
-    <link href="css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css">
-    <link href="css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css">
-    <link href="js/fancybox/jquery.fancybox.css" rel="stylesheet" type="text/css">
+    <link href="/css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css">
+    <link href="/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css">
+    <link href="/js/fancybox/jquery.fancybox.css" rel="stylesheet" type="text/css">
 
     <!-- Custom CSS -->
-    <link href="css/style.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href="http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
 
@@ -43,12 +43,12 @@
         <div class="container">
             <div class="navbar-header page-scroll">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
+                    <span class="sr-only"><?php echo TOGGLE_NAV; ?></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/">Virtuelles Museum</a>
+                <a class="navbar-brand" href="/"><?php echo SITE_NAME; ?></a>
             </div>
 
             <?php if($_SESSION) {?>
@@ -58,12 +58,19 @@
                             <a href="#page-top"></a>
                         </li>
                         <li>
-                            <a href="./?action=allPersons">Alle Informatiker/Innen</a>
-                        </li>
-                        <li class="page-scroll">
-                            <a href="/#about">Über das Museum</a>
+                            <a href="/allPersons"><?php echo ALL_COMPUTER_SCIENTIST; ?></a>
                         </li>
                     </ul>
+
+                    <form method="GET" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" name="searchForm" class="searchForm navbar-form navbar-right" role="search">
+                        <input type="hidden" name="action" value="search" />
+  
+                        <div class="form-group">
+                            <input type="text" class="form-control input-sm" name="q" id="q" placeholder="<?php echo SEARCH_PLACEHOLDER; ?>" value="<?php echo isset($_GET['q']) ? htmlspecialchars($_GET['q']) : ''; ?>" />
+                        </div>
+                        <button type="submit" class="btn btn-sm btn-default"><?php echo MAKE_SEARCH; ?></button>
+                    </form> 
+
                 </div>
             <?php } ?>
             <!-- /.navbar-collapse -->

@@ -5,10 +5,10 @@ Language: German
 ------------------
 */
 
+// GLobal
+
 const SITE_NAME = "Virtuelles Museum";
 const SLOGAN = "Größte Informatiker/Innen aller Zeiten";
-
-// GLobal
 
 const COMPUTER_SCIENTIST = "Informatiker/Innen";
 const ALL_COMPUTER_SCIENTIST = "Alle Informatiker/Innen";
@@ -32,6 +32,15 @@ const IN = "in";
 
 const SOURCES = "Quelle";
 
+//  Search
+
+const SEARCH = "Suche";
+const MAKE_SEARCH = "Suchen";
+const SEARCH_PLACEHOLDER = "Suche nach Personen";
+const SEARCH_FOR = "nach";
+const FOUND = "gefunden";
+const NO_SEARCH_QUERY = "Bitte geben Sie Suchkriterien";
+
 //  Home page
 
 const HOME_HEADER_TITLE = SITE_NAME;
@@ -43,6 +52,7 @@ const ABOUT_TEXT_2 = "In dieser Online Bibliothek erhalten Sie biographische Ang
 
 const MENU_ABOUT = "Über das Museum";
 const MENU_ALL_PERSONS = ALL_COMPUTER_SCIENTIST;
+const TOGGLE_NAV = "Navigation";
 
 
 // Footer

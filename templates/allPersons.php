@@ -18,11 +18,11 @@
                 <h4 class="list-group-item-heading"><?php echo CATEGORIES ?></h4>
               </li>
               <li class="list-group-item <?php if($category == '') { echo 'active'; } ?>">
-                <a href=".?action=allPersons"><?php echo ALL ?></a>
+                <a href="/allPersons"><?php echo ALL ?></a>
               </li>
             <?php foreach(Person::getFields("kategorie", 'id, name') as $cat) { ?>
                   <li class="list-group-item <?php if($category == $cat['id']) { echo 'active'; } ?>">
-                    <a href=".?action=allPersons&category=<?php echo $cat['id'] ?>">
+                    <a href="/allPersons/category/<?php echo $cat['id'] ?>">
                       <?php echo $cat['name'] ?>
                     </a>
                   </li>
@@ -37,13 +37,13 @@
               <?php foreach ( $results['persons'] as $person ) { ?>
                 <div class="media">
                   <div class="media-left">
-                    <a href=".?action=viewPerson&amp;personId=<?php echo $person->id?>" title="Meht erfahren">
-                      <img class="media-object" src="<?php echo Person::cropImage('img/persons', $person->bild_pfad, 150, 150); ?>" alt="">
+                    <a href="/viewPerson/<?php echo $person->id?>" title="Meht erfahren">
+                      <img class="media-object" width='150' src="/<?php echo Person::cropImage('img/persons', $person->bild_pfad, 150, 150); ?>" alt="">
                     </a>
                   </div>
                   <div class="media-body">
                     <h4>
-                      <a href=".?action=viewPerson&amp;personId=<?php echo $person->id?>" title="Meht erfahren">
+                      <a href="/viewPerson/<?php echo $person->id?>" title="Meht erfahren">
                         <?php echo $person->vorname .' '. $person->nachname ?>
                       </a>
                     </h4>
@@ -57,17 +57,17 @@
               <nav class='text-right'>
                 <ul class="pagination">
                   <li>
-                    <a href="<?php echo '.?action=allPersons&page=1' ?>">
+                    <a href="<?php echo '/allPersons/page/1' ?>">
                       <span aria-hidden="true">&laquo;</span>
                     </a>
                   </li>
                   <?php for ($i = 1; $i <= $results['totalPages']; $i++) { ?>
                     <li class="<?php if($page == $i) { echo 'active'; } ?>">
-                      <a href="<?php echo '.?action=allPersons&page=' . $i ?>"><?php echo $i; ?></a>
+                      <a href="<?php echo '/allPersons/page/' . $i ?>"><?php echo $i; ?></a>
                     </li>
                   <?php } ?> 
                   <li>
-                    <a href="<?php echo '.?action=allPersons&page='. $results['totalPages'] ?>">
+                    <a href="<?php echo '/allPersons/page/'. $results['totalPages'] ?>">
                       <span aria-hidden="true">&raquo;</span>
                     </a>
                   </li>
@@ -81,7 +81,7 @@
               <p><?php echo $results['totalRows']?> <?php echo ( $results['totalRows'] > 1 ) ? PERSONS : PERSON ?> <?php echo IN_TOTAL ?>.</p>
             </div>
             <div class="col-sm-6 text-right">
-              <p><a href="./"><?php echo RETURN_TO_HOME ?></a></p>
+              <p><a href="/"><?php echo RETURN_TO_HOME ?></a></p>
             </div>
         </div>
       </div>

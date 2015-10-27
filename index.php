@@ -47,6 +47,9 @@ switch ( $action ) {
   case 'viewModal':
     viewModal();
     break;
+  case 'search':
+    search();
+    break;
   default:
     homepage();
 }
@@ -84,11 +87,14 @@ function login() {
 }
 
 
+
 function logout() {
   unset( $_SESSION['user_name'] );
   unset( $_SESSION['admin_name'] );
   header( "Location: index.php" );
 }
+
+
 
 function allPersons() {
   $results = array();
@@ -114,6 +120,32 @@ function allPersons() {
   require( TEMPLATE_PATH . "/allPersons.php" );
 }
 
+
+
+function search() {
+
+
+
+  $results = array();
+
+  if (isset($_GET['q'])) {
+    // remove any html/javascript and converto to lower
+    $query = strtolower(strip_tags(trim($_GET['q'])));
+   
+    if ($query !== "" && strlen($query) >= 1) {
+      $data = Person::getByKeyword(htmlspecialchars($query)); // prevent sql injection.
+
+      $results['persons'] = $data['results'];
+      $results['totalRows'] = $data['totalRows'];
+      $results['pageTitle'] = "Suche";
+    }
+  }
+
+  require( TEMPLATE_PATH . "/search.php" );
+}
+
+
+
 function viewModal() {
   if ( !isset($_GET["personId"]) || !$_GET["personId"] ) {
     homepage();
@@ -125,6 +157,8 @@ function viewModal() {
   require( TEMPLATE_PATH . "/viewModal.php" );
 }
 
+
+
 function viewPerson() {
   if ( !isset($_GET["personId"]) || !$_GET["personId"] ) {
     homepage();
@@ -135,6 +169,8 @@ function viewPerson() {
   $results['pageTitle'] = $results['person']->nachname;
   require( TEMPLATE_PATH . "/viewPerson.php" );
 }
+
+
 
 function homepage() {
   $results = array();

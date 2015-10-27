@@ -35,6 +35,13 @@ $(function() {
         }, 3000);        
     }
 
+    // make search form submit to human friedly URL
+    $('.searchForm').submit(function (event) { 
+        var query = $('#q').val();
+        window.location='/search/'+query;
+        return false;
+    });
+
     // write removed images ids to a hidden input to delele them later on submit
     $('.remove-image').click(function() {
         var image_id = $(this).attr('id').split("-")[1];

@@ -7,12 +7,12 @@ define( "CLASS_PATH", "classes" );
 define( "TEMPLATE_PATH", "templates" );
 define( "HOMEPAGE_NUM_PERSONS", 6 );
 define( "PERSONS_PER_PAGE", 6 );
-define( "USER_USERNAME", "user" );
-define( "USER_PASSWORD", "user" );
+define( "USER_USERNAME", "einhorn" );
+define( "USER_PASSWORD", "1a2w3d4rDhbw" );
 define( "ADMIN_USERNAME", "einhorn" );
-define( "ADMIN_PASSWORD", "1a2s3d4f" );
-define( "VALID_IMAGES", serialize (array("jpeg","jpg","png","gif")) );
+define( "ADMIN_PASSWORD", "1a2w3d4rMuseum" );
 define( "MAX_IMAGES_SIZE", 1024*1000 ); // 1000 kb
+define( "MIN_IMAGES_SIZE", 11 );
 define( "IMAGES_PATH", "/home/hamster/WWW/dhbw-museum/img/persons/" ); // on server - /img/persons/
 require( CLASS_PATH . "/Person.php" );
 require( CLASS_PATH . "/Log.php" );

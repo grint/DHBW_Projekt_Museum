@@ -52,7 +52,7 @@
 
                 <p><?php echo $results['person']->k_beschreibung ?></p>
 
-                <p><a href=".?action=viewPerson&amp;personId=<?php echo $results['person']->id ?>"><?php echo LEARN_MORE ?></a></p>
+                <p><a href="/viewPerson/<?php echo $results['person']->id ?>"><?php echo LEARN_MORE ?></a></p>
 
                 <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> <?php echo CLOSE ?></button>                    
             </div>

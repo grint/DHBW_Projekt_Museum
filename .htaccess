@@ -1,0 +1,27 @@
+# Allow Follow SymLinks, Denies MultiViews, Denies viewing the contents of a folder
+Options +FollowSymLinks -MultiViews -Indexes
+
+RewriteEngine on
+RewriteBase /
+
+# condition that all existing files will not be processed by a regular expression
+RewriteCond %{REQUEST_FILENAME} !-f
+
+# condition that all existing directory will not be processed by a regular expression
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteRule ^(.*)$ /index.php?/$1 [L]
+RewriteRule ^admin$ /admin.php [L,NC]
+
+RewriteRule ^([a-zA-Z0-9_-]*)$ /index.php?action=$1 [L,NC]
+
+RewriteRule ^admin/([a-zA-Z0-9_-]*)$ /admin.php?action=$1 [L,NC]
+RewriteRule ^admin/([a-zA-Z0-9_-]*)/([a-z0-9_-]*)$ /admin.php?action=$1&personId=$2 [L,NC]
+RewriteRule ^admin/([a-zA-Z0-9_-]*)$ /admin.php?status=$1 [L,NC]
+RewriteRule ^admin/([a-zA-Z0-9_-]*)$ /admin.php?error=$1 [L,NC]
+
+RewriteRule ^([a-zA-Z0-9_-]*)/([0-9]*)$ /index.php?action=$1&personId=$2 [L,NC]
+RewriteRule ^([a-zA-Z0-9_-]*)/category/([0-9]*)$ /index.php?action=$1&category=$2 [L,NC]
+RewriteRule ^([a-zA-Z0-9_-]*)/page/([0-9]*)$ /index.php?action=$1&page=$2 [L,NC]
+RewriteRule ^([a-zA-Z0-9_-]*)/([a-zA-ZÜüÄäÖöß0-9_-]*)$ /index.php?action=$1&q=$2 [L,NC]
+

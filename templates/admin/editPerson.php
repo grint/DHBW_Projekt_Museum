@@ -16,7 +16,7 @@
            
             <h1 class="text-center"><?php echo $results['pageTitle']?></h1>
 
-            <form action="admin.php?action=<?php echo $results['formAction']?>" enctype="multipart/form-data" method="post">
+            <form action="<?php echo htmlspecialchars('/admin/' . $results['formAction']); ?>" enctype="multipart/form-data" method="post">
               <input type="hidden" name="personId" value="<?php echo $results['person']->id ?>"/>
 
               <?php if ( isset( $results['errorMessage'] ) ) { ?>
@@ -155,7 +155,7 @@
                 
                 <?php if ( $results['person']->id ) { ?>
                   <div class="pull-right">
-                    <a href="admin.php?action=deletePerson&amp;personId=<?php echo $results['person']->id ?>" onclick="return confirm('Delete This Person?')" class="btn btn-lg btn-danger"><?php echo REMOVE_THIS_PERSON ?></a>
+                    <a href="/admin/deletePerson/<?php echo $results['person']->id ?>" onclick="return confirm('Delete This Person?')" class="btn btn-lg btn-danger"><?php echo REMOVE_THIS_PERSON ?></a>
                   </div>
                 <?php } ?>
 

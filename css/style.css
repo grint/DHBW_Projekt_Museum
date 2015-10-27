@@ -534,3 +534,7 @@ blockquote.centered footer {
 section.success a.btn-outline:not(:hover):not(:focus):not(:active) {
     color: #fff;
 }
+
+.navbar-form {
+    margin-top: 15px;
+}

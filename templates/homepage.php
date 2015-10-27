@@ -5,7 +5,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <img class="img-responsive img-circle img-thumbnail" src="img/logo.jpg" alt="">
+                <img class="img-responsive img-circle img-thumbnail" src="/img/logo.jpg" alt="">
                 <div class="intro-text">
                     <span class="name"><?php echo HOME_HEADER_TITLE; ?></span>
                     <hr class="star-light">
@@ -28,14 +28,14 @@
         <div class="row">
           <?php foreach ( $results['persons'] as $person ) { ?>
             <div class="col-sm-4 person-item">
-                <a href=".?action=viewModal&amp;personId=<?php echo $person->id?>" data-toggle="modal" data-target="#informatikerModal" class="portfolio-link">
+                <a href="/viewModal/<?php echo $person->id?>" data-toggle="modal" data-target="#informatikerModal" class="portfolio-link">
                     <div class="caption">
                         <div class="caption-content">
                             <i class="fa fa-search-plus fa-3x"></i>
                             <span><?php echo htmlspecialchars($person->vorname).' '.htmlspecialchars($person->nachname)?></span>
                         </div>
                     </div>
-                    <img src="<?php echo Person::cropImage('img/persons', $person->bild_pfad, 360, 260); ?>" class="img-responsive img-thumbnail img-rounded" alt=""/>
+                    <img src="/<?php echo Person::cropImage('img/persons', $person->bild_pfad, 360, 260); ?>" class="img-responsive img-thumbnail img-rounded" alt=""/>
                 </a>
             </div>
           <?php } ?>
@@ -61,7 +61,7 @@
                 <p><?php echo ABOUT_TEXT_2 ?></p>
             </div>
             <div class="col-lg-8 col-lg-offset-2 text-center">
-                <a href="./?action=allPersons" class="btn btn-lg btn-outline">
+                <a href="/allPersons" class="btn btn-lg btn-outline">
                     <i class="fa fa-user"></i> <?php echo ALL_COMPUTER_SCIENTIST; ?>
                 </a>
             </div>

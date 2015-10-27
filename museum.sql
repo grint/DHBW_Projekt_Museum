@@ -420,7 +420,7 @@ INSERT INTO `museum`.`zitat` (`id`, `text`, `quelle`, `link`, `jahr`, `seite`, `
 INSERT INTO `museum`.`zitat` (`id`, `text`, `quelle`, `link`, `jahr`, `seite`, `person_id`) VALUES (3, 'Computer müssen so klein sein, dass sie in die linke untere Schublade eines Buchhalter-Schreibtisches passen.', NULL, 'https://de.wikipedia.org/wiki/Heinz_Nixdorf', NULL, NULL, 3);
 INSERT INTO `museum`.`zitat` (`id`, `text`, `quelle`, `link`, `jahr`, `seite`, `person_id`) VALUES (4, 'Wenn es eine gute Idee ist, dann mach es einfach. Es ist viel einfacher sich nachher zu entschuldigen als vorher die Genehmigung zu bekommen.', NULL, 'http://einstieg-informatik.de', NULL, NULL, 4);
 INSERT INTO `museum`.`zitat` (`id`, `text`, `quelle`, `link`, `jahr`, `seite`, `person_id`) VALUES (5, 'Wir können nur eine kurze Distanz in die Zukunft blicken, aber dort können wir eine Menge sehen, was getan werden muss.', 'Computing Machinery and Intelligence', NULL, 1950, NULL, 5);
-INSERT INTO `museum`.`zitat` (`id`, `text`, `quelle`, `link`, `jahr`, `seite`, `person_id`) VALUES (6, 'Beim Erwachen hatte ich schon so viele Einfälle, dass der Tag nicht ausreichte, um sie niederzuschreiben.', NULL, 'https://de.wikipedia.org/wiki/Gottfried_Wilhelm_Le', NULL, NULL, 6);
+INSERT INTO `museum`.`zitat` (`id`, `text`, `quelle`, `link`, `jahr`, `seite`, `person_id`) VALUES (6, 'Beim Erwachen hatte ich schon so viele Einfälle, dass der Tag nicht ausreichte, um sie niederzuschreiben.', NULL, 'https://de.wikipedia.org/wiki/Gottfried_Wilhelm_Leibniz', NULL, NULL, 6);
 
 COMMIT;
 

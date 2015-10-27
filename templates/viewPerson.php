@@ -72,8 +72,8 @@
                             <?php 
                             $images_urls = explode("|", $results['person']->bild_pfad);
                             for ($i = 0; $i < sizeof($images_urls); $i++) { ?>
-                                <a href="img/persons/<?php echo $images_urls[$i] ?>" class="fancybox" rel="gallery">
-                                    <img src="<?php echo Person::cropImage('img/persons', $images_urls[$i], 360, 260); ?>" class="img-bordered img-thumbnail img-centered" alt=""/>
+                                <a href="/img/persons/<?php echo $images_urls[$i] ?>" class="fancybox" rel="gallery">
+                                    <img src="/<?php echo Person::cropImage('img/persons', $images_urls[$i], 360, 260); ?>" class="img-bordered img-thumbnail img-centered" alt=""/>
                                 </a>
                             <?php } ?>
                     </div>
