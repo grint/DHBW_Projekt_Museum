@@ -25,27 +25,27 @@
                 $zitat_jahr = explode("|", $results['person']->zitat_jahr);
                 $zitat_seite = explode("|", $results['person']->zitat_seite);
             
-                if($zitat_text[0]) { ?> 
+                if($zitat_text[0] != 'NULL') { ?> 
                     <blockquote class="centered">
                         <p><?php echo $zitat_text[0] ?></p>
                         <footer>
 
-                            <?php if($zitat_quelle[0]) { ?> 
-                                <?php if($zitat_link[0]) { ?> 
+                            <?php if($zitat_quelle[0] != 'NULL') { ?> 
+                                <?php if($zitat_link[0] != 'NULL') { ?> 
                                     <a href="<?php echo $zitat_link[0] ?> " target='_blank'>
                                 <?php } ?>
                                 <?php echo $zitat_quelle[0]. ', ' ?>
-                                <?php if($zitat_link[0]) { ?> 
+                                <?php if($zitat_link[0] != 'NULL') { ?> 
                                     </a>
                                 <?php } ?>
                             <?php } else { ?>
-                                <?php if($zitat_link[0]) { ?> 
+                                <?php if($zitat_link[0] != 'NULL') { ?> 
                                     <a href="<?php echo $zitat_link[0] ?> " target='_blank'><?php echo $zitat_link[0] ?></a>
                                 <?php } ?>
                             <?php } ?>
 
-                            <?php echo $zitat_seite[0] ? 'S. ' .$zitat_seite[0]. ', ' : '' ?>
-                            <?php echo $zitat_jahr[0] ? $zitat_jahr[0] : '' ?>
+                            <?php echo $zitat_seite[0] != 'NULL' ? 'S. ' .$zitat_seite[0]. ', ' : '' ?>
+                            <?php echo $zitat_jahr[0] != 'NULL' ? $zitat_jahr[0] : '' ?>
                         </footer>
                     </blockquote>
                 <?php } ?>

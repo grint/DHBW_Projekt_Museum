@@ -515,7 +515,7 @@ blockquote.centered {
 }
 
 blockquote.centered:before {
-  color: #fff;
+  color: #333;
   content: open-quote;
   font-size: 4em;
   line-height: 0.1em;

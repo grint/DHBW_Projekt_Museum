@@ -19,7 +19,7 @@
         <div class="row">
             <div class="col-xs-12">
 
-              <?php if($_GET["q"] != '') { ?>
+              <?php if(isset($_GET["q"]) && $_GET["q"] != '') { ?>
 
                 <p class="text-center">
                   <?php echo $results['totalRows']?> 

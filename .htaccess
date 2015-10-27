@@ -10,7 +10,6 @@ RewriteCond %{REQUEST_FILENAME} !-f
 # condition that all existing directory will not be processed by a regular expression
 RewriteCond %{REQUEST_FILENAME} !-d
 
-RewriteRule ^(.*)$ /index.php?/$1 [L]
 RewriteRule ^admin$ /admin.php [L,NC]
 
 RewriteRule ^([a-zA-Z0-9_-]*)$ /index.php?action=$1 [L,NC]

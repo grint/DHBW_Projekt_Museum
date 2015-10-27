@@ -96,27 +96,27 @@
                 $zitat_seite = explode("|", $results['person']->zitat_seite);
                 
                 for ($i = 0; $i < sizeof($zitat_text); $i++) { ?>
-                    <?php if($zitat_text[$i]) { ?> 
+                    <?php if($zitat_text[$i] != 'NULL') { ?> 
                         <blockquote>
                             <p><?php echo $zitat_text[$i] ?></p>
                             <footer>
 
-                                <?php if($zitat_quelle[$i]) { ?> 
-                                    <?php if($zitat_link[$i]) { ?> 
+                                <?php if($zitat_quelle[$i] != 'NULL') { ?> 
+                                    <?php if($zitat_link[$i] != 'NULL') { ?> 
                                         <a href="<?php echo $zitat_link[$i] ?> " target='_blank'>
                                     <?php } ?>
                                     <?php echo $zitat_quelle[$i]. ', ' ?>
-                                    <?php if($zitat_link[$i]) { ?> 
+                                    <?php if($zitat_link[$i] != 'NULL') { ?> 
                                         </a>
                                     <?php } ?>
                                 <?php } else { ?>
-                                    <?php if($zitat_link[$i]) { ?> 
+                                    <?php if($zitat_link[$i] != 'NULL') { ?> 
                                         <a href="<?php echo $zitat_link[$i] ?> " target='_blank'><?php echo $zitat_link[$i] ?></a>
                                     <?php } ?>
                                 <?php } ?>
 
-                                <?php echo $zitat_seite[$i] ? 'S. ' .$zitat_seite[$i]. ', ' : '' ?>
-                                <?php echo $zitat_jahr[$i] ? $zitat_jahr[$i] : '' ?>
+                                <?php echo $zitat_seite[$i] != 'NULL' ? 'S. ' .$zitat_seite[$i]. ', ' : '' ?>
+                                <?php echo $zitat_jahr[$i] != 'NULL' ? $zitat_jahr[$i] : '' ?>
                             </footer>
                         </blockquote>
                     <?php } ?>

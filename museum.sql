@@ -230,8 +230,8 @@ DROP TABLE IF EXISTS `museum`.`zitat` ;
 CREATE TABLE IF NOT EXISTS `museum`.`zitat` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `text` TEXT NOT NULL,
-  `quelle` VARCHAR(50) NULL,
-  `link` VARCHAR(50) NULL,
+  `quelle` VARCHAR(300) NULL,
+  `link` VARCHAR(3000) NULL,
   `jahr` INT NULL,
   `seite` VARCHAR(50) NULL,
   `person_id` INT UNSIGNED NULL,
